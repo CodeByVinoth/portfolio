@@ -11,7 +11,6 @@ import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
 import ScrollProgress from './components/ScrollProgress';
 import BackToTop from './components/BackToTop';
-import Background from './components/Background'; // ✅ import background
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +25,7 @@ function App() {
   return (
     <div >
       {/* Unique Animated Background */}
-      <Background />
+     
 
       <AnimatePresence mode="wait">
         {isLoading ? (
@@ -41,7 +40,7 @@ function App() {
             <ScrollProgress />
             <Header />
             <main>
-              <Background />
+             
               <Hero />
               <About />
               <Skills />
