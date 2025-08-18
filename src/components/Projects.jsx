@@ -1,458 +1,572 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Smartphone, Globe, Brain, Code, Zap, Eye } from 'lucide-react';
+import { FiCode, FiExternalLink, FiGithub, FiCalendar, FiUser, FiTrendingUp, FiDatabase, FiCpu, FiLayers, FiZap, FiShield, FiActivity } from 'react-icons/fi';
 
-const Projects = () => {
-  const [activeProject, setActiveProject] = useState(null);
-  const [hoveredCard, setHoveredCard] = useState(null);
+const projectsData = [
+  {
+    id: 1,
+    title: "MediMate Application",
+    category: "Mobile App Development",
+    period: "Not specified",
+    status: "Completed",
+    type: "Academic",
+    description: "Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses. ",
+    longDescription: "Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses. It also includes appointment notifications for doctor visits.  This project enhanced skills in mobile app development and UI design. ",
+    technologies: ["Flutter", "SQLite", "Firebase"],
+    skills: [
+      { name: "Mobile App Development", level: 90 },
+      { name: "UI Design", level: 85 }
+    ],
+    achievements: [
+     "Helped users manage medications by setting schedules, receiving alerts, and tracking doses",
+      "Includes appointment notifications for doctor visits ",
+      "Enhanced skills in mobile app development and UI design "
+    ],
+    links: {
+      github: null,
+      demo: null,
+      documentation: null
+    },
+    color: "#10b981", // Green theme for healthcare
+    gradient: "from-emerald-500 to-teal-600"
+  },
+  {
+    id: 2,
+    title: "Student Housing Management System",
+    category: "Full Stack Development",
+    period: "Not specified",
+    status: "Completed",
+    type: "Academic",
+    description: "Built a web-based system to automate room allocation, maintenance tracking, and secure authentication.",
+    longDescription: "Built a web-based system to automate room allocation, maintenance tracking, and secure authentication. This project provided hands-on experience in full-stack development and database management. ",
+    technologies: ["Django", "MySQL"],
+    skills: [
+      { name: "Django", level: 90 },
+      { name: "MySQL", level: 85 },
+      { name: "Full-Stack Development", level: 88 },
+      { name: "Database Management", level: 80 }
+    ],
+    achievements: [
+      "Automated room allocation, maintenance tracking, and secure authentication ",
+      "Gained hands-on experience in full-stack development and database management "
+    ],
+    links: {
+      github: null,
+      demo: null,
+      documentation: null
+    },
+    color: "#f59e0b", // Amber theme
+    gradient: "from-amber-500 to-orange-600"
+  },
+  {
+    id: 3,
+    title: "Smart Leukemia Detection System",
+    category: "AI/Machine Learning",
+    period: "Not specified",
+    status: "Completed",
+    type: "Academic",
+    description: "Created a deep-learning system to classify blood cell images and predict leukemia stages. ",
+    longDescription: "Created a deep-learning system to classify blood cell images and predict leukemia stages. A Streamlit interface enables real-time predictions. This project strengthened skills in ML model deployment and AI applications. ",
+    technologies: ["MobileNetV2 CNN", "Streamlit"],
+    skills: [
+      { name: "MobileNetV2 CNN", level: 85 },
+      { name: "Streamlit", level: 80 },
+      { name: "ML Model Deployment", level: 90 },
+      { name: "AI Applications", level: 88 }
+    ],
+    achievements: [
+      "Classified blood cell images and predicted leukemia stages ",
+      "Enabled real-time predictions with a Streamlit interface ",
+      "Strengthened skills in ML model deployment and AI applications "
+    ],
+    links: {
+      github: "https://github.com/CodeByVinoth",
+      demo: null,
+      documentation: null
+    },
+    color: "#8b5cf6", // Purple theme for ML
+    gradient: "from-purple-500 to-violet-600"
+  }
+];
 
-  const projects = [
-    {
-      id: 1,
-      title: 'MediMate Application',
-      description: 'Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses. Includes appointment notifications for doctor visits. Enhanced skills in mobile app development and UI design.',
-      technologies: ['Flutter', 'SQLite', 'Firebase'],
-      icon: Smartphone,
-      gradient: 'from-blue-500 via-purple-500 to-cyan-500',
-      accentColor: '#3b82f6',
-      stats: { downloads: '2.5K+', rating: '4.8', users: '1.2K+' },
-      links: {
-        github: '#',
-        live: '#'
-      }
-    },
-    {
-      id: 2,
-      title: 'Student Housing Management System',
-      description: 'Built a web-based system to automate room allocation, maintenance tracking, and secure authentication. Gained hands-on experience in full-stack development and database management.',
-      technologies: ['Django', 'MySQL', 'HTML/CSS', 'JavaScript'],
-      icon: Globe,
-      gradient: 'from-green-500 via-emerald-500 to-teal-500',
-      accentColor: '#10b981',
-      stats: { institutions: '15+', rooms: '500+', efficiency: '89%' },
-      links: {
-        github: '#',
-        live: '#'
-      }
-    },
-    {
-      id: 3,
-      title: 'Smart Leukemia Detection System',
-      description: 'Created a deep-learning system to classify blood cell images and predict leukemia stages. Streamlit interface enables real-time predictions. Strengthened skills in ML model deployment and AI applications.',
-      technologies: ['MobileNetV2 CNN', 'Streamlit', 'Python', 'TensorFlow'],
-      icon: Brain,
-      gradient: 'from-purple-500 via-pink-500 to-red-500',
-      accentColor: '#8b5cf6',
-      stats: { accuracy: '94.2%', images: '10K+', models: '3' },
-      links: {
-        github: 'https://github.com/CodeByVinoth/Smart-Leukemia-Detection-System',
-        live: '#'
-      }
-    }
-  ];
+const ProjectsSection = () => {
+  const [activeProject, setActiveProject] = useState(projectsData[0]);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
+  // Handle responsive design
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 100, rotateX: -15 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      rotateX: 0,
-      transition: { 
-        duration: 0.8,
-        type: "spring",
-        bounce: 0.4
-      },
-    },
-  };
+    if (typeof window !== 'undefined') {
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
 
-  return (
-    <section id="projects" className="py-20 bg-gradient-to-br relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(50)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              delay: Math.random() * 5,
-              repeat: Infinity,
-            }}
-          />
-        ))}
-      </div>
+  // Load fonts to match other sections
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
 
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
-        >
-          <motion.div
-            className="inline-flex items-center gap-3 mb-6"
-            whileHover={{ scale: 1.05 }}
-          >
-            <Code className="w-8 h-8 text-cyan-400" />
-            <h2 className="text-5xl lg:text-6xl font-black bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Featured Projects
-            </h2>
-            <Zap className="w-8 h-8 text-purple-400" />
-          </motion.div>
-          
-          <motion.div
-            className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mx-auto mb-8 rounded-full"
-            initial={{ width: 0 }}
-            whileInView={{ width: 128 }}
-            transition={{ duration: 1.5, delay: 0.5 }}
-          />
-          
-          <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            Explore my latest creations where{" "}
-            <span className="text-cyan-400 font-semibold">innovation</span> meets{" "}
-            <span className="text-purple-400 font-semibold">functionality</span>
-          </p>
-        </motion.div>
+    const style = document.createElement('style');
+    style.textContent = `@font-face { font-family: 'SF Pro Display'; src: url('${import.meta.env.BASE_URL}fonts/SF-Pro-Display-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; };`;
+    document.head.appendChild(style);
+  }, []);
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-16"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {projects.map((project, index) => {
-            const IconComponent = project.icon;
-            return (
-              <motion.div
-                key={project.id}
-                className="relative group perspective-1000"
-                variants={cardVariants}
-                onHoverStart={() => setHoveredCard(project.id)}
-                onHoverEnd={() => setHoveredCard(null)}
-              >
-                <motion.div
-                  className="relative h-full bg-gray-800/50 backdrop-blur-xl rounded-2xl overflow-hidden border border-gray-700/50 cursor-pointer"
-                  whileHover={{ 
-                    rotateY: 5,
-                    rotateX: 5,
-                    z: 50,
-                  }}
-                  onClick={() => setActiveProject(activeProject === project.id ? null : project.id)}
-                  style={{
-                    boxShadow: hoveredCard === project.id 
-                      ? `0 20px 40px ${project.accentColor}40` 
-                      : '0 10px 30px rgba(0,0,0,0.3)',
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {/* Animated Border */}
-                  <motion.div
-                    className="absolute inset-0 rounded-2xl"
-                    style={{
-                      background: `linear-gradient(45deg, ${project.accentColor}40, transparent, ${project.accentColor}40)`,
-                      backgroundSize: '400% 400%',
-                    }}
-                    animate={{
-                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  />
+  const StatusBadge = ({ status, type }) => {
+    const getStatusColor = () => {
+      switch (status) {
+        case 'Completed':
+          return 'bg-green-500/20 text-green-400 border-green-500/30';
+        case 'In Progress':
+          return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+        default:
+          return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      }
+    };
 
-                  {/* Header with Floating Icon */}
-                  <div className={`relative h-40 bg-gradient-to-br ${project.gradient} p-6 overflow-hidden`}>
-                    <motion.div
-                      className="absolute inset-0 opacity-20"
-                      animate={{
-                        background: [
-                          'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%)',
-                          'radial-gradient(circle at 80% 80%, rgba(255,255,255,0.3) 0%, transparent 50%)',
-                          'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 50%)',
-                        ],
-                      }}
-                      transition={{ duration: 4, repeat: Infinity }}
-                    />
-                    
-                    <motion.div
-                      className="relative z-10 flex items-center justify-between h-full"
-                      animate={hoveredCard === project.id ? { y: -5 } : { y: 0 }}
-                    >
-                      <div>
-                        <h3 className="text-2xl font-bold text-white mb-2">
-                          {project.title}
-                        </h3>
-                        <div className="flex gap-2">
-                          {project.links.github && (
-                            <motion.a
-                              href={project.links.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30"
-                              whileHover={{ scale: 1.2, rotate: 10 }}
-                              whileTap={{ scale: 0.9 }}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <Github size={16} className="text-white" />
-                            </motion.a>
-                          )}
-                          {project.links.live !== '#' && (
-                            <motion.a
-                              href={project.links.live}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30"
-                              whileHover={{ scale: 1.2, rotate: -10 }}
-                              whileTap={{ scale: 0.9 }}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <ExternalLink size={16} className="text-white" />
-                            </motion.a>
-                          )}
-                        </div>
-                      </div>
-                      
-                      <motion.div
-                        animate={{
-                          rotate: [0, 360],
-                          scale: hoveredCard === project.id ? 1.2 : 1,
-                        }}
-                        transition={{
-                          rotate: { duration: 8, repeat: Infinity, ease: "linear" },
-                          scale: { duration: 0.3 }
-                        }}
-                      >
-                        <IconComponent size={64} className="text-white/90" />
-                      </motion.div>
-                    </motion.div>
-                  </div>
+    const getTypeIcon = () => {
+      switch (type) {
+        case 'Academic':
+          return '🎓';
+        case 'Professional':
+          return '💼';
+        default:
+          return '📋';
+      }
+    };
 
-                  {/* Content */}
-                  <div className="p-6">
-                    <motion.p
-                      className="text-gray-300 text-sm leading-relaxed mb-6"
-                      animate={hoveredCard === project.id ? { color: '#d1d5db' } : { color: '#9ca3af' }}
-                    >
-                      {project.description}
-                    </motion.p>
+    return (
+      <div className="flex items-center gap-2 mb-4">
+        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor()}`}>
+          {status}
+        </span>
+        <span className="px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/80 border border-white/20">
+          {getTypeIcon()} {type}
+        </span>
+      </div>
+    );
+  };
 
-                    {/* Stats Row */}
-                    <div className="grid grid-cols-3 gap-4 mb-6">
-                      {Object.entries(project.stats).map(([key, value]) => (
-                        <motion.div
-                          key={key}
-                          className="text-center p-3 bg-gray-700/30 rounded-lg border border-gray-600/30"
-                          whileHover={{ scale: 1.05, backgroundColor: 'rgba(55, 65, 81, 0.5)' }}
-                        >
-                          <div className="text-lg font-bold text-white">{value}</div>
-                          <div className="text-xs text-gray-400 capitalize">{key}</div>
-                        </motion.div>
-                      ))}
-                    </div>
+  // Skill bar component
+  const SkillBar = ({ skill }) => (
+    <div className="mb-3">
+      <div className="flex justify-between items-center text-sm mb-2">
+        <span className="text-white/80 font-medium">{skill.name}</span>
+        <span className="text-white/60">{skill.level}%</span>
+      </div>
+      <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+        <motion.div
+          className="h-full rounded-full"
+          style={{ backgroundColor: activeProject.color }}
+          initial={{ width: '0%' }}
+          animate={{ width: `${skill.level}%` }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+        />
+      </div>
+    </div>
+  );
 
-                    {/* Technologies with Animation */}
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech, techIndex) => (
-                        <motion.span
-                          key={tech}
-                          className="px-3 py-1 rounded-full text-xs font-medium border"
-                          style={{
-                            backgroundColor: `${project.accentColor}20`,
-                            borderColor: `${project.accentColor}60`,
-                          }}
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: techIndex * 0.1 }}
-                          whileHover={{ 
-                            scale: 1.1,
-                            backgroundColor: `${project.accentColor}30`,
-                          }}
-                        >
-                          {tech}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </div>
+  // Project navigation item
+  const ProjectNavItem = ({ project, isActive, onClick }) => (
+    <motion.div
+      className={`cursor-pointer p-4 rounded-lg transition-all duration-300 border ${isActive ? 'bg-white/10 border-white/20 shadow-lg' : 'bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/15'}`}
+      onClick={onClick}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      <div className="flex items-center gap-3 mb-2">
+        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: project.color }} />
+        <h3 className="font-semibold text-white text-sm md:text-base">
+          {project.title}
+        </h3>
+      </div>
+      <p className="text-white/60 text-xs md:text-sm mb-2">{project.category}</p>
+      <p className="text-white/50 text-xs">{project.period}</p>
+    </motion.div>
+  );
 
-                  {/* Hover Effect Overlay */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 pointer-events-none"
-                    animate={{ opacity: hoveredCard === project.id ? 1 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+  return (
+    <section
+      id="projects"
+      className="relative text-white py-20 px-6 md:px-12 lg:px-20 w-full overflow-hidden"
+      style={{ fontFamily: "'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}
+    >
+      {/* Enhanced Background Overlay */}
+      <div className="absolute inset-0 z-[1] overflow-hidden">
+        {/* Gradient continuation from skills section */}
+        <div className="absolute inset-0 bg-gradient-to-b" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/10 to-transparent" />
+        
+        {/* Enhanced tech grid pattern */}
+        <motion.div
+          className="absolute inset-0"
+          animate={{ opacity: [0.02, 0.06, 0.02] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            backgroundImage: 'linear-gradient(rgba(139,92,246,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.06) 1px, transparent 1px)',
+            backgroundSize: '120px 120px'
+          }}
+        />
 
-        {/* Interactive Project Details Modal */}
-        <AnimatePresence>
-          {activeProject && (
-            <motion.div
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setActiveProject(null)}
-            >
-              <motion.div
-                className="bg-gray-800 rounded-2xl p-8 max-w-2xl w-full border border-gray-600"
-                initial={{ scale: 0.5, rotateY: -90 }}
-                animate={{ scale: 1, rotateY: 0 }}
-                exit={{ scale: 0.5, rotateY: 90 }}
-                transition={{ type: "spring", bounce: 0.3 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {(() => {
-                  const project = projects.find(p => p.id === activeProject);
-                  const IconComponent = project.icon;
-                  return (
-                    <>
-                      <div className="flex items-center gap-4 mb-6">
-                        <motion.div
-                          className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${project.gradient} flex items-center justify-center`}
-                          animate={{ rotate: [0, 360] }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                        >
-                          <IconComponent size={32} className="text-white" />
-                        </motion.div>
-                        <div>
-                          <h3 className="text-2xl font-bold text-white">{project.title}</h3>
-                          <p className="text-gray-400">Detailed Overview</p>
-                        </div>
-                      </div>
-                      
-                      <p className="text-gray-300 leading-relaxed mb-6">
-                        {project.description}
-                      </p>
-                      
-                      <div className="grid grid-cols-3 gap-4 mb-6">
-                        {Object.entries(project.stats).map(([key, value]) => (
-                          <div key={key} className="text-center p-4 bg-gray-700/50 rounded-xl">
-                            <div className="text-xl font-bold text-white">{value}</div>
-                            <div className="text-sm text-gray-400 capitalize">{key}</div>
-                          </div>
-                        ))}
-                      </div>
-                      
-                      <div className="flex flex-col sm:flex-row gap-4">
-                        {project.links.github && (
-                          <motion.a
-                            href={project.links.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-3 px-6 rounded-xl font-semibold flex items-center justify-center gap-2"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <Github size={20} />
-                            View Code
-                          </motion.a>
-                        )}
-                        {project.links.live !== '#' && (
-                          <motion.a
-                            href={project.links.live}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1 text-white py-3 px-6 rounded-xl font-semibold flex items-center justify-center gap-2"
-                            style={{ backgroundColor: project.accentColor }}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <ExternalLink size={20} />
-                            Live Demo
-                          </motion.a>
-                        )}
-                      </div>
-                    </>
-                  );
-                })()}
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Dynamic color-changing particles */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full"
+          style={{ backgroundColor: activeProject.color }}
+          animate={{
+            x: [0, 120, -60, 0],
+            y: [0, -100, 80, 0],
+            opacity: [0, 0.4, 0.2, 0],
+            scale: [0.5, 1.2, 0.8, 0.5],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute top-3/4 right-1/3 w-1.5 h-1.5 rounded-full"
+          style={{ backgroundColor: activeProject.color, opacity: 0.3 }}
+          animate={{
+            x: [0, -100, 60, 0],
+            y: [0, 60, -40, 0],
+            opacity: [0, 0.6, 0.1, 0],
+            scale: [0.3, 1, 0.6, 0.3],
+          }}
+          transition={{ duration: 30, repeat: Infinity, ease: "easeInOut", delay: 8 }}
+        />
+        <motion.div
+          className="absolute top-1/2 right-1/4 w-1 h-1 rounded-full"
+          style={{ backgroundColor: '#10b981', opacity: 0.25 }}
+          animate={{
+            x: [0, 80, -120, 0],
+            y: [0, -70, 40, 0],
+            opacity: [0, 0.5, 0.15, 0],
+          }}
+          transition={{ duration: 35, repeat: Infinity, ease: "easeInOut", delay: 15 }}
+        />
+      </div>
 
-        {/* Enhanced Call to Action */}
-        <motion.div
-          className="text-center mt-20"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <motion.div
-            className="inline-block relative"
-            whileHover={{ scale: 1.05 }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-2xl blur-xl opacity-50"
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.5, 0.8, 0.5],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-            
-            <motion.a
-              href="https://github.com/CodeByVinoth"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative inline-flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-2xl overflow-hidden group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-              
-              <motion.div
-                className="relative flex items-center gap-3"
-                animate={{
-                  x: [0, 5, 0],
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <Github size={24} />
-                <span>Explore All Projects</span>
-                <Eye size={20} />
-              </motion.div>
-              
-              {/* Shimmer Effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform skew-x-12"
-                animate={{ x: [-200, 200] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-              />
-            </motion.a>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  );
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-center">
+            Featured{' '}
+            <motion.span
+              className="bg-gradient-to-r from-purple-500 via-emerald-500 to-amber-500 bg-clip-text text-transparent"
+              animate={{ backgroundPosition: ['0% 0%', '100% 0%', '0% 0%'] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              style={{ backgroundSize: '200% 100%' }}
+            >
+              Projects
+            </motion.span>
+          </h2>
+          <p className="text-center text-white/60 mt-4 max-w-2xl mx-auto">
+            A showcase of my development journey from academic projects to professional implementations
+          </p>
+        </motion.div>
+
+        {/* Main Content Container */}
+        <div className="max-w-7xl mx-auto">
+          {isMobile ? (
+            // Mobile: Stacked Layout
+            <div className="space-y-8">
+              {/* Mobile Project Selector */}
+              <div className="space-y-4">
+                {projectsData.map((project) => (
+                  <ProjectNavItem
+                    key={project.id}
+                    project={project}
+                    isActive={activeProject.id === project.id}
+                    onClick={() => setActiveProject(project)}
+                  />
+                ))}
+              </div>
+
+              {/* Mobile Project Details */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeProject.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-white/5 rounded-xl p-6 border border-white/10 backdrop-blur-sm"
+                >
+                  <div className="mb-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-4 h-4 rounded-full" style={{ backgroundColor: activeProject.color }} />
+                      <h3 className="text-2xl font-bold text-white">
+                        {activeProject.title}
+                      </h3>
+                    </div>
+                    <StatusBadge status={activeProject.status} type={activeProject.type} />
+                  </div>
+                  <p className="text-white/80 leading-relaxed mb-6">
+                    {activeProject.longDescription}
+                  </p>
+
+                  {/* Technologies */}
+                  <div className="mb-6">
+                    <h4 className="text-white/90 font-semibold mb-3 flex items-center gap-2">
+                      <FiCode className="text-lg" /> Technologies
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {activeProject.technologies.map((tech, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/80 border border-white/20"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Skills */}
+                  <div className="mb-6">
+                    <h4 className="text-white/90 font-semibold mb-4 flex items-center gap-2">
+                      <FiTrendingUp className="text-lg" /> Skills Developed
+                    </h4>
+                    {activeProject.skills.map((skill, index) => (
+                      <SkillBar key={index} skill={skill} />
+                    ))}
+                  </div>
+
+                  {/* Achievements */}
+                  <div className="mb-6">
+                    <h4 className="text-white/90 font-semibold mb-3 flex items-center gap-2">
+                      <FiActivity className="text-lg" /> Key Achievements
+                    </h4>
+                    <ul className="space-y-2">
+                      {activeProject.achievements.map((achievement, index) => (
+                        <li key={index} className="flex items-start gap-2 text-white/80">
+                          <div className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: activeProject.color }} />
+                          {achievement}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Links */}
+                  <div className="flex flex-wrap gap-3">
+                    {activeProject.links.github && (
+                      <a
+                        href={activeProject.links.github}
+                        className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 text-white/80 hover:text-white border border-white/20"
+                      >
+                        <FiGithub />
+                        <span>Source Code</span>
+                      </a>
+                    )}
+                    {activeProject.links.demo && (
+                      <a
+                        href={activeProject.links.demo}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 text-white border-2"
+                        style={{ backgroundColor: `${activeProject.color}20`, borderColor: activeProject.color, color: activeProject.color }}
+                      >
+                        <FiExternalLink />
+                        <span>Live Demo</span>
+                      </a>
+                    )}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          ) : (
+            // Desktop: Split Screen Layout
+            <div className="grid grid-cols-12 gap-8 min-h-[600px]">
+              {/* Left Panel - Project Navigation */}
+              <div className="col-span-4">
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="sticky top-8"
+                >
+                  <h3 className="text-xl font-semibold text-white/90 mb-6 flex items-center gap-2">
+                    <FiLayers /> Project Archive
+                  </h3>
+                  <div className="space-y-4">
+                    {projectsData.map((project) => (
+                      <ProjectNavItem
+                        key={project.id}
+                        project={project}
+                        isActive={activeProject.id === project.id}
+                        onClick={() => setActiveProject(project)}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Add New Project Placeholder */}
+                  <motion.div
+                    className="mt-6 p-4 border-2 border-dashed border-white/20 rounded-lg text-center cursor-pointer hover:border-white/30 transition-colors duration-200"
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <div className="text-white/50 text-sm">
+                      <FiZap className="mx-auto mb-2" />
+                      More projects coming soon...
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </div>
+
+              {/* Right Panel - Project Details */}
+              <div className="col-span-8">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeProject.id}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ duration: 0.4 }}
+                    className="bg-white/5 rounded-xl p-8 border border-white/10 backdrop-blur-sm"
+                  >
+                    {/* Project Header */}
+                    <div className="mb-8">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-5 h-5 rounded-full" style={{ backgroundColor: activeProject.color }} />
+                        <h3 className="text-3xl font-bold text-white">
+                          {activeProject.title}
+                        </h3>
+                      </div>
+                      <StatusBadge status={activeProject.status} type={activeProject.type} />
+                      <div className="flex items-center gap-4 text-white/60 text-sm">
+                        <div className="flex items-center gap-2">
+                          <FiCalendar /> {activeProject.period}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <FiUser /> {activeProject.category}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Project Description */}
+                    <div className="mb-8">
+                      <p className="text-white/80 leading-relaxed text-lg">
+                        {activeProject.longDescription}
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      {/* Left Column */}
+                      <div className="space-y-6">
+                        {/* Technologies */}
+                        <div>
+                          <h4 className="text-white/90 font-semibold mb-4 flex items-center gap-2">
+                            <FiCode className="text-lg" /> Technologies Used
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {activeProject.technologies.map((tech, index) => (
+                              <motion.span
+                                key={index}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: index * 0.1 }}
+                                className="px-3 py-2 bg-white/10 rounded-lg text-sm text-white/80 border border-white/20 hover:bg-white/20 transition-colors duration-200"
+                              >
+                                {tech}
+                              </motion.span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Achievements */}
+                        <div>
+                          <h4 className="text-white/90 font-semibold mb-4 flex items-center gap-2">
+                            <FiActivity className="text-lg" /> Key Achievements
+                          </h4>
+                          <ul className="space-y-3">
+                            {activeProject.achievements.map((achievement, index) => (
+                              <motion.li
+                                key={index}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.1 }}
+                                className="flex items-start gap-3 text-white/80"
+                              >
+                                <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: activeProject.color }} />
+                                {achievement}
+                              </motion.li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* Right Column */}
+                      <div>
+                        {/* Skills Developed */}
+                        <div>
+                          <h4 className="text-white/90 font-semibold mb-4 flex items-center gap-2">
+                            <FiTrendingUp className="text-lg" /> Skills Developed
+                          </h4>
+                          <div className="space-y-4">
+                            {activeProject.skills.map((skill, index) => (
+                              <SkillBar key={index} skill={skill} />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="mt-8 pt-6 border-t border-white/10">
+                      <div className="flex flex-wrap gap-4">
+                        {activeProject.links.github && (
+                          <motion.a
+                            href={activeProject.links.github}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 text-white/80 hover:text-white border border-white/20"
+                          >
+                            <FiGithub />
+                            <span>Source Code</span>
+                          </motion.a>
+                        )}
+                        {activeProject.links.demo && (
+                          <motion.a
+                            href={activeProject.links.demo}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-2 px-6 py-3 rounded-lg transition-colors duration-200 text-white border-2"
+                            style={{ backgroundColor: `${activeProject.color}20`, borderColor: activeProject.color, color: activeProject.color }}
+                          >
+                            <FiExternalLink />
+                            <span>Live Demo</span>
+                          </motion.a>
+                        )}
+                        {activeProject.links.documentation && (
+                          <motion.a
+                            href={activeProject.links.documentation}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors duration-200 text-white/60 hover:text-white/80 border border-white/10"
+                          >
+                            <FiShield />
+                            <span>Documentation</span>
+                          </motion.a>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
 };
 
-export default Projects;
+export default ProjectsSection;
