@@ -31,7 +31,7 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-b from-black to-primary-900/20">
+    <section id="about">
       <div className="container-width section-padding">
         <motion.div
           className="text-center mb-16"

@@ -144,7 +144,7 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <motion.div
-          className="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-center items-center gap-4"
+          className="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-center items-center gap-1"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}

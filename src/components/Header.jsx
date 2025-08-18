@@ -1,124 +1,158 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const headerRef = useRef(null);
 
-  const navItems = [
-    { name: 'Home', href: 'home' },
-    { name: 'About', href: 'about' },
-    { name: 'Skills', href: 'skills' },
-    { name: 'Projects', href: 'projects' },
-    { name: 'Experience', href: 'experience' },
-    { name: 'Contact', href: 'contact' },
-  ];
-
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (href) => {
-    const id = (href || '').replace(/^#/, '');
-    const element = document.getElementById(id);
-    if (!element) return; // safety: do nothing if section not found
+  // Gradient animation
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
 
-    const headerHeight = headerRef.current?.offsetHeight ?? 80;
-    const yOffset = -(headerHeight + 8); // small gap under header
-    const targetY = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-    if (isMobileMenuOpen) {
-      // close menu first, then scroll after close animation
-      setIsMobileMenuOpen(false);
-      setTimeout(() => window.scrollTo({ top: targetY, behavior: 'smooth' }), 260);
-    } else {
-      window.scrollTo({ top: targetY, behavior: 'smooth' });
-    }
-  };
+  const navItems = [
+    { name: "Home", href: "#hero" },
+    { name: "About", href: "#about" },
+    { name: "Skills", href: "#skills" },
+    { name: "Projects", href: "#projects" },
+    { name: "Experience", href: "#experience" },
+    { name: "Contact", href: "#contact" },
+  ];
 
   return (
-    <motion.header
-      ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass-nav shadow-lg' : 'bg-transparent'
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <nav className="container-width section-padding py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <motion.div
-            className="text-2xl font-bold gradient-text cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => scrollToSection('home')}
-          >
-            VINOTHKANNA
-          </motion.div>
+    <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[96%] max-w-7xl transition-all duration-500 ease-in-out">
+      {/* Glassmorphism container */}
+      <div
+        className={`relative backdrop-filter backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl transition-all duration-500 ${
+          isScrolled ? "bg-black/20" : "bg-black/10"
+        }`}
+      >
+        {/* Overlay reflection */}
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/8 via-white/4 to-transparent opacity-30"></div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item, index) => (
-              <motion.button
+        <div className="relative px-6 py-4 flex justify-between items-center font-[Inter,sans-serif]">
+          {/* Logo with animated gradient */}
+          <motion.a
+            href="#hero"
+            className="tracking-wide relative z-10 transition-all duration-300 hover:scale-105"
+            style={{
+              fontSize: "1.75rem",
+              fontWeight: "700",
+              textDecoration: "none",
+            }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <span
+              className="bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 bg-clip-text text-transparent"
+              style={{
+                backgroundSize: "200% 100%",
+                animation: "gradientShift 3s ease-in-out infinite",
+              }}
+            >
+              Vinothkanna
+            </span>
+          </motion.a>
+
+          {/* Desktop nav */}
+          <ul className="hidden md:flex gap-8 items-center">
+            {navItems.map((item, i) => (
+              <motion.li
                 key={item.name}
-                className="text-gray-300 hover:text-white transition-colors relative group"
-                onClick={() => scrollToSection(item.href)}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.06 }}
-                whileHover={{ y: -2 }}
+                transition={{ delay: i * 0.1 }}
               >
-                {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-all duration-300 group-hover:w-full" />
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <motion.button
-            className="md:hidden text-white z-50"
-            onClick={() => setIsMobileMenuOpen((v) => !v)}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </motion.button>
-        </div>
-
-        {/* Mobile Navigation (keeps same dropdown position, with glass effect) */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              className="md:hidden mt-4 glass-liquid rounded-2xl p-6 space-y-4 border border-white/20 shadow-lg"
-              initial={{ opacity: 0, y: -12, height: 0 }}
-              animate={{ opacity: 1, y: 0, height: 'auto' }}
-              exit={{ opacity: 0, y: -12, height: 0 }}
-              transition={{ duration: 0.28 }}
-            >
-              {navItems.map((item, index) => (
-                <motion.button
-                  key={item.name}
-                  className="block w-full text-left text-white font-medium tracking-wide transition-colors py-2"
-                  onClick={() => scrollToSection(item.href)}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.06 }}
-                  whileHover={{ x: 8, scale: 1.03 }}
+                <a
+                  href={item.href}
+                  className="relative transition-all duration-300 hover:scale-105 group"
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                    color: "#E6F9FF",
+                    textDecoration: "none",
+                  }}
                 >
                   {item.name}
-                </motion.button>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
-    </motion.header>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-300 to-blue-400 transition-all duration-300 group-hover:w-full rounded-full"></span>
+                  <span className="absolute inset-0 bg-cyan-300/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-sm"></span>
+                </a>
+              </motion.li>
+            ))}
+          </ul>
+
+          {/* Mobile button */}
+          <button
+            className="md:hidden relative flex flex-col justify-center items-center w-10 h-10 space-y-1.5 focus:outline-none backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl transition-all duration-300 hover:bg-cyan-300/20"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <X className="text-white" size={24} />
+            ) : (
+              <Menu className="text-white" size={24} />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile nav */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            className="md:hidden absolute top-full left-0 w-full mt-2"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+          >
+            <div className="backdrop-filter backdrop-blur-sm bg-black/15 border border-white/20 rounded-2xl shadow-2xl overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/8 via-white/4 to-transparent opacity-30"></div>
+
+              <ul className="relative flex flex-col py-2">
+                {navItems.map((item) => (
+                  <li key={item.name}>
+                    <a
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block px-6 py-4 transition-all duration-300 hover:bg-cyan-300/10 border-b border-white/10 last:border-b-0 group"
+                      style={{
+                        fontSize: "1rem",
+                        fontWeight: "600",
+                        color: "#E6F9FF",
+                        textDecoration: "none",
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span>{item.name}</span>
+                        <span className="text-cyan-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          →
+                        </span>
+                      </div>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
   );
 };
 

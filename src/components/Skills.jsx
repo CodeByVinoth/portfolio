@@ -1,36 +1,39 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  Code,
-  Database,
-  Globe,
-  Smartphone,
-  Users,
-  Lightbulb,
-  MessageSquare,
-  Target,
-} from "lucide-react";
+  FaPython,
+  FaJava,
+  FaHtml5,
+  FaCss3Alt,
+  FaReact,
+  FaFigma,
+  FaDatabase,
+  FaUsers,
+  FaLightbulb,
+  FaComments,
+  FaBullseye,
+} from "react-icons/fa";
 
 const Skills = () => {
   const technicalSkills = [
-    { name: "Python", icon: Code },
-    { name: "Java", icon: Code },
-    { name: "HTML/CSS", icon: Globe },
-    { name: "Django", icon: Globe },
-    { name: "React", icon: Globe },
-    { name: "Figma", icon: Smartphone },
-    { name: "MySQL", icon: Database },
+    { name: "Python", icon: FaPython, color: "text-yellow-400" },
+    { name: "Java", icon: FaJava, color: "text-red-500" },
+    { name: "HTML", icon: FaHtml5, color: "text-orange-500" },
+    { name: "CSS", icon: FaCss3Alt, color: "text-blue-500" },
+    { name: "React", icon: FaReact, color: "text-cyan-400" },
+    { name: "Figma", icon: FaFigma, color: "text-pink-500" },
+    { name: "MySQL", icon: FaDatabase, color: "text-green-400" },
   ];
 
   const softSkills = [
-    { name: "Problem Solving", icon: Lightbulb },
-    { name: "Presentation", icon: MessageSquare },
-    { name: "Team Collaboration", icon: Users },
-    { name: "Leadership", icon: Target },
+    { name: "Problem Solving", icon: FaLightbulb, color: "text-yellow-300" },
+    { name: "Presentation", icon: FaComments, color: "text-purple-400" },
+    { name: "Team Collaboration", icon: FaUsers, color: "text-blue-400" },
+    { name: "Leadership", icon: FaBullseye, color: "text-red-400" },
   ];
 
   return (
-    <section id="skills" className="py-20 bg-gradient-to-b from-black via-gray-900 to-black">
+    <section id="skills" className="py-20 bg-gradient-to-b">
       <div className="container-width section-padding text-center">
         <motion.h2
           className="text-5xl font-extrabold gradient-text mb-12"
@@ -43,54 +46,54 @@ const Skills = () => {
         </motion.h2>
 
         {/* Technical Skills */}
-        <h3 className="text-2xl font-bold text-accent-400 mb-6">Technical</h3>
-        <div className="flex flex-wrap justify-center gap-6 mb-16">
+        <h3 className="text-2xl font-bold text-accent-400 mb-8">Technical</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mb-16">
           {technicalSkills.map((skill, i) => {
             const Icon = skill.icon;
             return (
               <motion.div
                 key={skill.name}
-                className="px-6 py-4 bg-gray-800/40 border border-accent-500/30 rounded-xl shadow-lg flex items-center gap-3 hover:scale-110 hover:shadow-accent-500/50 transition-all cursor-pointer"
+                className="p-6 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg hover:shadow-accent-500/50 flex flex-col items-center justify-center gap-3 cursor-pointer transition-transform hover:-translate-y-2"
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Icon className="text-accent-400" size={22} />
-                <span className="text-white font-medium">{skill.name}</span>
+                <Icon className={`${skill.color} text-4xl`} />
+                <span className="text-white font-semibold text-lg">{skill.name}</span>
               </motion.div>
             );
           })}
         </div>
 
         {/* Soft Skills */}
-        <h3 className="text-2xl font-bold text-accent-400 mb-6">Soft Skills</h3>
-        <div className="flex flex-wrap justify-center gap-6 mb-16">
+        <h3 className="text-2xl font-bold text-accent-400 mb-8">Soft Skills</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mb-16">
           {softSkills.map((skill, i) => {
             const Icon = skill.icon;
             return (
               <motion.div
                 key={skill.name}
-                className="px-6 py-4 bg-gray-800/40 border border-blue-500/30 rounded-xl shadow-lg flex items-center gap-3 hover:scale-110 hover:shadow-blue-500/50 transition-all cursor-pointer"
+                className="p-6 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg hover:shadow-blue-500/50 flex flex-col items-center justify-center gap-3 cursor-pointer transition-transform hover:-translate-y-2"
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Icon className="text-blue-400" size={22} />
-                <span className="text-white font-medium">{skill.name}</span>
+                <Icon className={`${skill.color} text-4xl`} />
+                <span className="text-white font-semibold text-lg">{skill.name}</span>
               </motion.div>
             );
           })}
         </div>
 
         {/* Languages */}
-        <h3 className="text-2xl font-bold text-accent-400 mb-6">Languages</h3>
-        <div className="flex justify-center gap-6">
-          <span className="px-6 py-2 rounded-full bg-accent-500/20 text-accent-400 font-medium">
+        <h3 className="text-2xl font-bold text-accent-400 mb-8">Languages</h3>
+        <div className="flex justify-center gap-6 flex-wrap">
+          <span className="px-6 py-2 rounded-full bg-accent-500/20 text-accent-400 font-medium shadow-lg">
             English – Proficient
           </span>
-          <span className="px-6 py-2 rounded-full bg-blue-500/20 text-blue-400 font-medium">
+          <span className="px-6 py-2 rounded-full bg-blue-500/20 text-blue-400 font-medium shadow-lg">
             Tamil – Native
           </span>
         </div>
