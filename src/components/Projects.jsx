@@ -86,7 +86,92 @@ const projectsData = [
     },
     color: "#8b5cf6", // Purple theme for ML
     gradient: "from-purple-500 to-violet-600"
-  }
+  },
+  {
+    id: 4,
+    title: "Wattstrons Automations Website",
+    category: "Frontend Development",
+    period: "2025",
+    status: "In Progress",
+    type: "Personal",
+    description: "A modern React + Vite based website for Wattstrons Automations with custom header design and smooth animations.",
+    longDescription: "Designed and developed a modern website for Wattstrons Automations using React, Vite, and Tailwind CSS. Implemented a custom header with circular glow effects for buttons and bottom border animations for navigation. Focused on responsiveness, fast performance, and clean UI.",
+    technologies: ["React", "Vite", "Tailwind CSS"],
+    skills: [
+      { name: "React", level: 90 },
+      { name: "Frontend Design", level: 85 },
+      { name: "Vite", level: 80 }
+    ],
+    achievements: [
+      "Developed a responsive and fast-loading website",
+      "Implemented custom header with glow and animated navigation",
+      "Enhanced UI/UX with modern design principles"
+    ],
+    links: {
+      github: "https://github.com/CodeByVinoth/wattstrons.git",
+      demo: "https://wattstrons-automationscom.vercel.app/",
+      documentation: null
+    },
+    color: "#3b82f6",
+    gradient: "from-blue-500 to-indigo-600"
+  },
+  {
+    id: 5,
+    title: "Portfolio Website",
+    category: "Frontend Development",
+    period: "2025",
+    status: "Completed",
+    type: "Personal",
+    description: "Interactive and animated portfolio website built with Django and React-style UI.",
+    longDescription: "Built a visually appealing and interactive portfolio website showcasing my skills, projects, and resume. Integrated animated text greetings, project showcase with smooth transitions, and a downloadable resume feature. Designed with multiple animations and vibrant color combinations inspired by modern UI trends.",
+    technologies: ["Django", "HTML", "CSS", "JavaScript"],
+    skills: [
+      { name: "UI/UX Design", level: 88 },
+      { name: "Django", level: 85 },
+      { name: "Frontend Animation", level: 80 }
+    ],
+    achievements: [
+      "Showcased projects, skills, and resume in a single platform",
+      "Implemented animated greetings and interactive sections",
+      "Created a professional-looking personal brand presence online"
+    ],
+    links: {
+      github: null,
+      demo: null,
+      documentation: null
+    },
+    color: "#ec4899",
+    gradient: "from-pink-500 to-rose-600"
+  },
+  {
+  id: 6,
+  title: "Terndra Project",
+  category: "Full Stack Development",
+  period: "2025",
+  status: "In Progress",
+  type: "Personal",
+  description: "A full-stack web application focusing on smooth data flow and secure user authentication.",
+  longDescription: "Terndra is a full-stack web application built to experiment with advanced authentication, secure APIs, and scalable backend architecture. This project improves experience with MERN stack (MongoDB, Express, React, Node.js) and Git workflow, focusing on clean code structure and CI/CD deployment readiness.",
+  technologies: ["React", "Node.js", "Express", "MongoDB"],
+  skills: [
+    { name: "MERN Stack Development", level: 88 },
+    { name: "API Design", level: 85 },
+    { name: "Git & Version Control", level: 80 }
+  ],
+  achievements: [
+    "Implemented secure user authentication using JWT",
+    "Practiced Git branching and conflict resolution",
+    "Improved knowledge in scalable backend design"
+  ],
+  links: {
+    github: "https://github.com/CodeByVinoth/terndra",
+    demo: "https://terndra.vercel.app/",
+    documentation: null
+  },
+  color: "#14b8a6", // teal color theme
+  gradient: "from-teal-500 to-cyan-600"
+}
+
 ];
 
 const ProjectsSection = () => {
