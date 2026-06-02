@@ -39,7 +39,6 @@ const Hero = () => {
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight">
                 <span className="gradient-text">VINOTHKANNA</span>
                 <br />
-                
               </h1>
 
               <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 font-light">
@@ -91,19 +90,18 @@ const Hero = () => {
               >
                 View My Work
               </motion.button>
-<motion.a
-  href="/resume.pdf"
-  target="_blank"
-  className="relative border border-white/20 text-white px-6 sm:px-8 py-3 rounded-lg font-semibold backdrop-blur-md bg-white/10 
+              <motion.a
+                href="/resume.pdf"
+                target="_blank"
+                className="relative border border-white/20 text-white px-6 sm:px-8 py-3 rounded-lg font-semibold backdrop-blur-md bg-white/10 
              shadow-[0_0_20px_rgba(0,255,200,0.15)] transition-all duration-300 
              hover:shadow-[0_0_35px_rgba(0,255,200,0.45)] hover:border-cyan-400"
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
->
-  <span className="relative z-10">Download Resume</span>
-  <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 opacity-0 blur-md transition-opacity duration-300 hover:opacity-100"></span>
-</motion.a>
-
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="relative z-10">Download Resume</span>
+                <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 opacity-0 blur-md transition-opacity duration-300 hover:opacity-100"></span>
+              </motion.a>
             </motion.div>
 
             {/* Social Links */}
@@ -161,18 +159,16 @@ const Hero = () => {
                   whileHover={{ scale: 1.05, rotate: 5 }}
                 >
                   <img
-                    src="/profile.jpeg"
+                    src="/profile.png"
                     alt="Profile"
                     className="w-full h-full object-cover"
                   />
                 </motion.div>
 
                 <div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                    
-                  </h3>
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">Vinothkanna JR</h3>
                   <p className="text-gray-400 text-sm sm:text-base">
-                     Namakkal, Tamil Nadu
+                    Namakkal, Tamil Nadu
                   </p>
                 </div>
 
@@ -188,30 +184,40 @@ const Hero = () => {
                   </div>
                   <div className="flex items-center gap-3 text-gray-300">
                     <MapPin size={16} className="text-accent-500" />
-                    <span> Namakkal, Tamil Nadu</span>
+                    <span>Namakkal, Tamil Nadu</span>
                   </div>
                 </div>
 
                 {/* Quick Actions */}
-                <div className="space-y-3">
+                <div className="space-y-3" style={{ position: 'relative', zIndex: 50 }}>
                   <motion.a
                     href="https://linkedin.com/in/vinothkanna-jr"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+                    className="block w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 cursor-pointer flex items-center justify-center gap-2"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
+                    style={{ pointerEvents: 'auto' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
                   >
+                    <Linkedin size={16} />
                     LinkedIn Profile
                   </motion.a>
                   <motion.a
                     href="https://github.com/CodeByVinoth"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+                    className="block w-full bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/25 cursor-pointer flex items-center justify-center gap-2"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
+                    style={{ pointerEvents: 'auto' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
                   >
+                    <Github size={16} />
                     GitHub Profile
                   </motion.a>
                 </div>
@@ -220,23 +226,6 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Scroll Indicator */}
-        {/* <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
-        >
-          <motion.button
-            onClick={scrollToAbout}
-            className="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <span className="text-sm">Scroll Down</span>
-            <ArrowDown size={20} />
-          </motion.button>
-        </motion.div> */}
       </div>
     </section>
   );

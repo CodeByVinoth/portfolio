@@ -36,7 +36,7 @@ const ContactSection = () => {
 
   const handleResumeDownload = () => {
     // Update this path to match your resume file location in the public folder
-    const resumePath = `${import.meta.env.BASE_URL}resume.pdf`;
+    const resumePath = `${import.meta.env.BASE_URL}Vinothkanna_J_R_CV.pdf`;
     const link = document.createElement('a');
     link.href = resumePath;
     link.download = 'Vinoth_Kanna_CV.pdf';
@@ -485,7 +485,7 @@ const ContactSection = () => {
                     whileTap={{ scale: 0.98 }}
                   >
                     <FiDownload className="text-orange-400 flex-shrink-0 text-lg" />
-                    <span className="text-white/90 text-sm font-medium">→ Resume.pdf</span>
+                    <span className="text-white/90 text-sm font-medium">→ Resume</span>
                     <div className="ml-auto text-white/50 group-hover:text-white/80 group-hover:scale-110 transition-all">⬇️</div>
                   </motion.button>
                   <motion.a

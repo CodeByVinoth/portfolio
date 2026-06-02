@@ -1,177 +1,201 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiCode, FiExternalLink, FiGithub, FiCalendar, FiUser, FiTrendingUp, FiDatabase, FiCpu, FiLayers, FiZap, FiShield, FiActivity } from 'react-icons/fi';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FiCode,
+  FiExternalLink,
+  FiGithub,
+  FiCalendar,
+  FiUser,
+  FiTrendingUp,
+  FiDatabase,
+  FiCpu,
+  FiLayers,
+  FiZap,
+  FiShield,
+  FiActivity,
+} from "react-icons/fi";
 
 const projectsData = [
   {
     id: 1,
     title: "MediMate Application",
     category: "Mobile App Development",
-    period: "Not specified",
+    period: "2023",
     status: "Completed",
     type: "Academic",
-    description: "Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses. ",
-    longDescription: "Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses. It also includes appointment notifications for doctor visits.  This project enhanced skills in mobile app development and UI design. ",
+    description:
+      "Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses. ",
+    longDescription:
+      "Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses. It also includes appointment notifications for doctor visits.  This project enhanced skills in mobile app development and UI design. ",
     technologies: ["Flutter", "SQLite", "Firebase"],
     skills: [
       { name: "Mobile App Development", level: 90 },
-      { name: "UI Design", level: 85 }
+      { name: "UI Design", level: 85 },
     ],
     achievements: [
-     "Helped users manage medications by setting schedules, receiving alerts, and tracking doses",
+      "Helped users manage medications by setting schedules, receiving alerts, and tracking doses",
       "Includes appointment notifications for doctor visits ",
-      "Enhanced skills in mobile app development and UI design "
+      "Enhanced skills in mobile app development and UI design ",
     ],
     links: {
       github: null,
       demo: null,
-      documentation: null
+      documentation: null,
     },
     color: "#10b981", // Green theme for healthcare
-    gradient: "from-emerald-500 to-teal-600"
+    gradient: "from-emerald-500 to-teal-600",
   },
   {
     id: 2,
     title: "Student Housing Management System",
     category: "Full Stack Development",
-    period: "Not specified",
+    period: "2024",
     status: "Completed",
     type: "Academic",
-    description: "Built a web-based system to automate room allocation, maintenance tracking, and secure authentication.",
-    longDescription: "Built a web-based system to automate room allocation, maintenance tracking, and secure authentication. This project provided hands-on experience in full-stack development and database management. ",
+    description:
+      "Built a web-based system to automate room allocation, maintenance tracking, and secure authentication.",
+    longDescription:
+      "Built a web-based system to automate room allocation, maintenance tracking, and secure authentication. This project provided hands-on experience in full-stack development and database management. ",
     technologies: ["Django", "MySQL"],
     skills: [
       { name: "Django", level: 90 },
       { name: "MySQL", level: 85 },
       { name: "Full-Stack Development", level: 88 },
-      { name: "Database Management", level: 80 }
+      { name: "Database Management", level: 80 },
     ],
     achievements: [
       "Automated room allocation, maintenance tracking, and secure authentication ",
-      "Gained hands-on experience in full-stack development and database management "
+      "Gained hands-on experience in full-stack development and database management ",
     ],
     links: {
       github: null,
       demo: null,
-      documentation: null
+      documentation: null,
     },
     color: "#f59e0b", // Amber theme
-    gradient: "from-amber-500 to-orange-600"
+    gradient: "from-amber-500 to-orange-600",
   },
   {
     id: 3,
     title: "Smart Leukemia Detection System",
     category: "AI/Machine Learning",
-    period: "Not specified",
+    period: "2025",
     status: "Completed",
     type: "Academic",
-    description: "Created a deep-learning system to classify blood cell images and predict leukemia stages. ",
-    longDescription: "Created a deep-learning system to classify blood cell images and predict leukemia stages. A Streamlit interface enables real-time predictions. This project strengthened skills in ML model deployment and AI applications. ",
+    description:
+      "Created a deep-learning system to classify blood cell images and predict leukemia stages. ",
+    longDescription:
+      "Created a deep-learning system to classify blood cell images and predict leukemia stages. A Streamlit interface enables real-time predictions. This project strengthened skills in ML model deployment and AI applications. ",
     technologies: ["MobileNetV2 CNN", "Streamlit"],
     skills: [
       { name: "MobileNetV2 CNN", level: 85 },
       { name: "Streamlit", level: 80 },
       { name: "ML Model Deployment", level: 90 },
-      { name: "AI Applications", level: 88 }
+      { name: "AI Applications", level: 88 },
     ],
     achievements: [
       "Classified blood cell images and predicted leukemia stages ",
       "Enabled real-time predictions with a Streamlit interface ",
-      "Strengthened skills in ML model deployment and AI applications "
+      "Strengthened skills in ML model deployment and AI applications ",
     ],
     links: {
       github: "https://github.com/CodeByVinoth",
       demo: null,
-      documentation: null
+      documentation: null,
     },
     color: "#8b5cf6", // Purple theme for ML
-    gradient: "from-purple-500 to-violet-600"
+    gradient: "from-purple-500 to-violet-600",
   },
   {
     id: 4,
-    title: "Wattstrons Automations Website",
-    category: "Frontend Development",
-    period: "2025",
-    status: "In Progress",
-    type: "Personal",
-    description: "A modern React + Vite based website for Wattstrons Automations with custom header design and smooth animations.",
-    longDescription: "Designed and developed a modern website for Wattstrons Automations using React, Vite, and Tailwind CSS. Implemented a custom header with circular glow effects for buttons and bottom border animations for navigation. Focused on responsiveness, fast performance, and clean UI.",
-    technologies: ["React", "Vite", "Tailwind CSS"],
-    skills: [
-      { name: "React", level: 90 },
-      { name: "Frontend Design", level: 85 },
-      { name: "Vite", level: 80 }
-    ],
-    achievements: [
-      "Developed a responsive and fast-loading website",
-      "Implemented custom header with glow and animated navigation",
-      "Enhanced UI/UX with modern design principles"
-    ],
-    links: {
-      github: "https://github.com/CodeByVinoth/wattstrons.git",
-      demo: "https://wattstrons-automationscom.vercel.app/",
-      documentation: null
-    },
-    color: "#3b82f6",
-    gradient: "from-blue-500 to-indigo-600"
-  },
-  {
-    id: 5,
     title: "Portfolio Website",
     category: "Frontend Development",
     period: "2025",
     status: "Completed",
     type: "Personal",
-    description: "Interactive and animated portfolio website built with Django and React-style UI.",
-    longDescription: "Built a visually appealing and interactive portfolio website showcasing my skills, projects, and resume. Integrated animated text greetings, project showcase with smooth transitions, and a downloadable resume feature. Designed with multiple animations and vibrant color combinations inspired by modern UI trends.",
+    description:
+      "Interactive and animated portfolio website built with Django and React-style UI.",
+    longDescription:
+      "Built a visually appealing and interactive portfolio website showcasing my skills, projects, and resume. Integrated animated text greetings, project showcase with smooth transitions, and a downloadable resume feature. Designed with multiple animations and vibrant color combinations inspired by modern UI trends.",
     technologies: ["Django", "HTML", "CSS", "JavaScript"],
     skills: [
       { name: "UI/UX Design", level: 88 },
       { name: "Django", level: 85 },
-      { name: "Frontend Animation", level: 80 }
+      { name: "Frontend Animation", level: 80 },
     ],
     achievements: [
       "Showcased projects, skills, and resume in a single platform",
       "Implemented animated greetings and interactive sections",
-      "Created a professional-looking personal brand presence online"
+      "Created a professional-looking personal brand presence online",
     ],
     links: {
       github: null,
       demo: null,
-      documentation: null
+      documentation: null,
     },
     color: "#ec4899",
-    gradient: "from-pink-500 to-rose-600"
+    gradient: "from-pink-500 to-rose-600",
   },
   {
-  id: 6,
-  title: "Terndra Project",
-  category: "Full Stack Development",
-  period: "2025",
-  status: "In Progress",
-  type: "Personal",
-  description: "A full-stack web application focusing on smooth data flow and secure user authentication.",
-  longDescription: "Terndra is a full-stack web application built to experiment with advanced authentication, secure APIs, and scalable backend architecture. This project improves experience with MERN stack (MongoDB, Express, React, Node.js) and Git workflow, focusing on clean code structure and CI/CD deployment readiness.",
-  technologies: ["React", "Node.js", "Express", "MongoDB"],
-  skills: [
-    { name: "MERN Stack Development", level: 88 },
-    { name: "API Design", level: 85 },
-    { name: "Git & Version Control", level: 80 }
-  ],
-  achievements: [
-    "Implemented secure user authentication using JWT",
-    "Practiced Git branching and conflict resolution",
-    "Improved knowledge in scalable backend design"
-  ],
-  links: {
-    github: "https://github.com/CodeByVinoth/terndra",
-    demo: "https://terndra.vercel.app/",
-    documentation: null
+    id: 5,
+    title: "Terndra Project",
+    category: "Full Stack Development",
+    period: "2025",
+    status: "In Progress",
+    type: "Personal",
+    description:
+      "A full-stack web application focusing on smooth data flow and secure user authentication.",
+    longDescription:
+      "Terndra is a full-stack web application built to experiment with advanced authentication, secure APIs, and scalable backend architecture. This project improves experience with MERN stack (MongoDB, Express, React, Node.js) and Git workflow, focusing on clean code structure and CI/CD deployment readiness.",
+    technologies: ["React", "Node.js", "Express", "MongoDB"],
+    skills: [
+      { name: "MERN Stack Development", level: 88 },
+      { name: "API Design", level: 85 },
+      { name: "Git & Version Control", level: 80 },
+    ],
+    achievements: [
+      "Implemented secure user authentication using JWT",
+      "Practiced Git branching and conflict resolution",
+      "Improved knowledge in scalable backend design",
+    ],
+    links: {
+      github: "https://github.com/CodeByVinoth/terndra",
+      demo: "https://terndra.vercel.app/",
+      documentation: null,
+    },
+    color: "#14b8a6", // teal color theme
+    gradient: "from-teal-500 to-cyan-600",
   },
-  color: "#14b8a6", // teal color theme
-  gradient: "from-teal-500 to-cyan-600"
-}
+  {
+    id: 6,
+    title: " Travel Bridge",
+    category: "Web Application",
+    period: "2026",
+    status: "Completed",
+    type: "Internship",
+    description:
+      "A modern travel booking and trip management platform designed for seamless travel experiences.",
+    longDescription:
+      "Designed and developed Change My Travel Bridge, a responsive travel platform focused on trip planning, booking assistance, and user-friendly navigation. Built using React, Vite, and Tailwind CSS with smooth animations, modern UI components, and optimized performance for both desktop and mobile users.",
+    technologies: ["React", "Vite", "Tailwind CSS"],
+    skills: [
+      { name: "React", level: 90 },
+      { name: "Frontend Design", level: 88 },
+      { name: "Responsive UI", level: 85 },
+    ],
+    achievements: [
+      "Developed a responsive travel booking platform",
+      "Implemented smooth animations and modern UI design",
+      "Optimized website performance and mobile responsiveness",
+    ],
+    links: {
+      github: "https://github.com/CodeByVinoth",
 
+      documentation: null,
+    },
+    color: "#06b6d4",
+    gradient: "from-cyan-500 to-blue-600",
+  },
 ];
 
 const ProjectsSection = () => {
@@ -184,51 +208,56 @@ const ProjectsSection = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       handleResize();
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
     }
   }, []);
 
   // Load fonts to match other sections
   useEffect(() => {
-    const link = document.createElement('link');
-    link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
-    link.rel = 'stylesheet';
+    const link = document.createElement("link");
+    link.href =
+      "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap";
+    link.rel = "stylesheet";
     document.head.appendChild(link);
 
-    const style = document.createElement('style');
-    style.textContent = `@font-face { font-family: 'SF Pro Display'; src: url('${import.meta.env.BASE_URL}fonts/SF-Pro-Display-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; };`;
+    const style = document.createElement("style");
+    style.textContent = `@font-face { font-family: 'SF Pro Display'; src: url('${
+      import.meta.env.BASE_URL
+    }fonts/SF-Pro-Display-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; };`;
     document.head.appendChild(style);
   }, []);
 
   const StatusBadge = ({ status, type }) => {
     const getStatusColor = () => {
       switch (status) {
-        case 'Completed':
-          return 'bg-green-500/20 text-green-400 border-green-500/30';
-        case 'In Progress':
-          return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+        case "Completed":
+          return "bg-green-500/20 text-green-400 border-green-500/30";
+        case "In Progress":
+          return "bg-blue-500/20 text-blue-400 border-blue-500/30";
         default:
-          return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+          return "bg-gray-500/20 text-gray-400 border-gray-500/30";
       }
     };
 
     const getTypeIcon = () => {
       switch (type) {
-        case 'Academic':
-          return '🎓';
-        case 'Professional':
-          return '💼';
+        case "Academic":
+          return "🎓";
+        case "Professional":
+          return "💼";
         default:
-          return '📋';
+          return "📋";
       }
     };
 
     return (
       <div className="flex items-center gap-2 mb-4">
-        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor()}`}>
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor()}`}
+        >
           {status}
         </span>
         <span className="px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/80 border border-white/20">
@@ -249,7 +278,7 @@ const ProjectsSection = () => {
         <motion.div
           className="h-full rounded-full"
           style={{ backgroundColor: activeProject.color }}
-          initial={{ width: '0%' }}
+          initial={{ width: "0%" }}
           animate={{ width: `${skill.level}%` }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
         />
@@ -260,18 +289,27 @@ const ProjectsSection = () => {
   // Project navigation item
   const ProjectNavItem = ({ project, isActive, onClick }) => (
     <motion.div
-      className={`cursor-pointer p-4 rounded-lg transition-all duration-300 border ${isActive ? 'bg-white/10 border-white/20 shadow-lg' : 'bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/15'}`}
+      className={`cursor-pointer p-4 rounded-lg transition-all duration-300 border ${
+        isActive
+          ? "bg-white/10 border-white/20 shadow-lg"
+          : "bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/15"
+      }`}
       onClick={onClick}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: project.color }} />
+        <div
+          className="w-3 h-3 rounded-full"
+          style={{ backgroundColor: project.color }}
+        />
         <h3 className="font-semibold text-white text-sm md:text-base">
           {project.title}
         </h3>
       </div>
-      <p className="text-white/60 text-xs md:text-sm mb-2">{project.category}</p>
+      <p className="text-white/60 text-xs md:text-sm mb-2">
+        {project.category}
+      </p>
       <p className="text-white/50 text-xs">{project.period}</p>
     </motion.div>
   );
@@ -280,22 +318,26 @@ const ProjectsSection = () => {
     <section
       id="projects"
       className="relative text-white py-20 px-6 md:px-12 lg:px-20 w-full overflow-hidden"
-      style={{ fontFamily: "'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}
+      style={{
+        fontFamily:
+          "'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      }}
     >
       {/* Enhanced Background Overlay */}
       <div className="absolute inset-0 z-[1] overflow-hidden">
         {/* Gradient continuation from skills section */}
         <div className="absolute inset-0 bg-gradient-to-b" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/10 to-transparent" />
-        
+
         {/* Enhanced tech grid pattern */}
         <motion.div
           className="absolute inset-0"
           animate={{ opacity: [0.02, 0.06, 0.02] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
           style={{
-            backgroundImage: 'linear-gradient(rgba(139,92,246,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.06) 1px, transparent 1px)',
-            backgroundSize: '120px 120px'
+            backgroundImage:
+              "linear-gradient(rgba(139,92,246,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.06) 1px, transparent 1px)",
+            backgroundSize: "120px 120px",
           }}
         />
 
@@ -320,17 +362,27 @@ const ProjectsSection = () => {
             opacity: [0, 0.6, 0.1, 0],
             scale: [0.3, 1, 0.6, 0.3],
           }}
-          transition={{ duration: 30, repeat: Infinity, ease: "easeInOut", delay: 8 }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 8,
+          }}
         />
         <motion.div
           className="absolute top-1/2 right-1/4 w-1 h-1 rounded-full"
-          style={{ backgroundColor: '#10b981', opacity: 0.25 }}
+          style={{ backgroundColor: "#10b981", opacity: 0.25 }}
           animate={{
             x: [0, 80, -120, 0],
             y: [0, -70, 40, 0],
             opacity: [0, 0.5, 0.15, 0],
           }}
-          transition={{ duration: 35, repeat: Infinity, ease: "easeInOut", delay: 15 }}
+          transition={{
+            duration: 35,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 15,
+          }}
         />
       </div>
 
@@ -345,18 +397,24 @@ const ProjectsSection = () => {
           className="mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-center">
-            Featured{' '}
+            Featured{" "}
             <motion.span
               className="bg-gradient-to-r from-purple-500 via-emerald-500 to-amber-500 bg-clip-text text-transparent"
-              animate={{ backgroundPosition: ['0% 0%', '100% 0%', '0% 0%'] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              style={{ backgroundSize: '200% 100%' }}
+              animate={{ backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"] }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              }}
+              style={{ backgroundSize: "200% 100%" }}
             >
               Projects
             </motion.span>
           </h2>
           <p className="text-center text-white/60 mt-4 max-w-2xl mx-auto">
-            A showcase of my development journey from academic projects to professional implementations
+            A showcase of my development journey from academic projects to
+            professional implementations
           </p>
         </motion.div>
 
@@ -389,12 +447,18 @@ const ProjectsSection = () => {
                 >
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-4 h-4 rounded-full" style={{ backgroundColor: activeProject.color }} />
+                      <div
+                        className="w-4 h-4 rounded-full"
+                        style={{ backgroundColor: activeProject.color }}
+                      />
                       <h3 className="text-2xl font-bold text-white">
                         {activeProject.title}
                       </h3>
                     </div>
-                    <StatusBadge status={activeProject.status} type={activeProject.type} />
+                    <StatusBadge
+                      status={activeProject.status}
+                      type={activeProject.type}
+                    />
                   </div>
                   <p className="text-white/80 leading-relaxed mb-6">
                     {activeProject.longDescription}
@@ -434,8 +498,14 @@ const ProjectsSection = () => {
                     </h4>
                     <ul className="space-y-2">
                       {activeProject.achievements.map((achievement, index) => (
-                        <li key={index} className="flex items-start gap-2 text-white/80">
-                          <div className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: activeProject.color }} />
+                        <li
+                          key={index}
+                          className="flex items-start gap-2 text-white/80"
+                        >
+                          <div
+                            className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
+                            style={{ backgroundColor: activeProject.color }}
+                          />
                           {achievement}
                         </li>
                       ))}
@@ -457,7 +527,11 @@ const ProjectsSection = () => {
                       <a
                         href={activeProject.links.demo}
                         className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 text-white border-2"
-                        style={{ backgroundColor: `${activeProject.color}20`, borderColor: activeProject.color, color: activeProject.color }}
+                        style={{
+                          backgroundColor: `${activeProject.color}20`,
+                          borderColor: activeProject.color,
+                          color: activeProject.color,
+                        }}
                       >
                         <FiExternalLink />
                         <span>Live Demo</span>
@@ -520,12 +594,18 @@ const ProjectsSection = () => {
                     {/* Project Header */}
                     <div className="mb-8">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="w-5 h-5 rounded-full" style={{ backgroundColor: activeProject.color }} />
+                        <div
+                          className="w-5 h-5 rounded-full"
+                          style={{ backgroundColor: activeProject.color }}
+                        />
                         <h3 className="text-3xl font-bold text-white">
                           {activeProject.title}
                         </h3>
                       </div>
-                      <StatusBadge status={activeProject.status} type={activeProject.type} />
+                      <StatusBadge
+                        status={activeProject.status}
+                        type={activeProject.type}
+                      />
                       <div className="flex items-center gap-4 text-white/60 text-sm">
                         <div className="flex items-center gap-2">
                           <FiCalendar /> {activeProject.period}
@@ -572,18 +652,25 @@ const ProjectsSection = () => {
                             <FiActivity className="text-lg" /> Key Achievements
                           </h4>
                           <ul className="space-y-3">
-                            {activeProject.achievements.map((achievement, index) => (
-                              <motion.li
-                                key={index}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                                className="flex items-start gap-3 text-white/80"
-                              >
-                                <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: activeProject.color }} />
-                                {achievement}
-                              </motion.li>
-                            ))}
+                            {activeProject.achievements.map(
+                              (achievement, index) => (
+                                <motion.li
+                                  key={index}
+                                  initial={{ opacity: 0, x: -20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: index * 0.1 }}
+                                  className="flex items-start gap-3 text-white/80"
+                                >
+                                  <div
+                                    className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
+                                    style={{
+                                      backgroundColor: activeProject.color,
+                                    }}
+                                  />
+                                  {achievement}
+                                </motion.li>
+                              )
+                            )}
                           </ul>
                         </div>
                       </div>
@@ -593,7 +680,8 @@ const ProjectsSection = () => {
                         {/* Skills Developed */}
                         <div>
                           <h4 className="text-white/90 font-semibold mb-4 flex items-center gap-2">
-                            <FiTrendingUp className="text-lg" /> Skills Developed
+                            <FiTrendingUp className="text-lg" /> Skills
+                            Developed
                           </h4>
                           <div className="space-y-4">
                             {activeProject.skills.map((skill, index) => (
@@ -624,7 +712,11 @@ const ProjectsSection = () => {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="flex items-center gap-2 px-6 py-3 rounded-lg transition-colors duration-200 text-white border-2"
-                            style={{ backgroundColor: `${activeProject.color}20`, borderColor: activeProject.color, color: activeProject.color }}
+                            style={{
+                              backgroundColor: `${activeProject.color}20`,
+                              borderColor: activeProject.color,
+                              color: activeProject.color,
+                            }}
                           >
                             <FiExternalLink />
                             <span>Live Demo</span>

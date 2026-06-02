@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, Award, Calendar, MapPin, Trophy, Users, FileText } from 'lucide-react';
+import { Briefcase, Award, Calendar, MapPin, Trophy, Users, FileText, ExternalLink, GraduationCap, Shield } from 'lucide-react';
 
 const Experience = () => {
   const workExperience = [
@@ -39,6 +39,45 @@ const Experience = () => {
     { level: "Bachelor's CGPA", score: "7.9" },
     { level: "HSLC", score: "81.8%" },
     { level: "SSLC", score: "78.2%" }
+  ];
+
+  const certifications = [
+    {
+      title: "Full Stack Java Development",
+      organization: "Wipro TalentNext",
+      credentialId: "FSJD-2024-XXXX",
+      skills: ["Java", "Spring Boot", "React", "MySQL", "REST APIs"],
+      link: "#",
+      color: "from-blue-500 to-cyan-500",
+      icon: Shield
+    },
+    {
+      title: "Java Programming",
+      organization: "Wipro",
+      credentialId: "9z7MzHvmmF",
+      skills: ["Core Java", "OOP", "Collections", "Multithreading"],
+      link: "https://cert.diceid.com/cid/9z7MzHvmmF",
+      color: "from-orange-500 to-red-500",
+      icon: FileText
+    },
+    {
+      title: "Python Programming",
+      organization: "Certiport",
+      credentialId: "ApQqnS634DUgcKNAgabfEA==",
+      skills: ["Python", "Data Structures", "Problem Solving"],
+      link: "https://www.certiport.com/portal/Pages/PrintTranscriptInfo.aspx?action=Cert&id=471&cvid=ApQqnS634DUgcKNAgabfEA==",
+      color: "from-yellow-500 to-green-500",
+      icon: Award
+    },
+    {
+      title: "Django Development",
+      organization: "Udemy",
+      credentialId: "UC-b2c0ab44-4ff5-4b78-8477-ba9a0227d57a",
+      skills: ["Django", "Python Web", "Database Management"],
+      link: "https://ude.my/UC-b2c0ab44-4ff5-4b78-8477-ba9a0227d57a",
+      color: "from-green-500 to-emerald-500",
+      icon: GraduationCap
+    }
   ];
 
   const containerVariants = {
@@ -100,21 +139,21 @@ const Experience = () => {
                     whileHover={{ scale: 1.02 }}
                   >
                     {/* Timeline dot */}
-                    <div className="absolute -left-3 top-8 w-6 h-6 bg-accent-500 rounded-full border-4 border-black" />
+                    <div className="absolute -left-3 top-8 w-6 h-6 bg-accent-500 rounded-full border-4 border-black hidden lg:block" />
                     
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
                       <div>
                         <h4 className="text-xl font-semibold text-white mb-1">{job.title}</h4>
                         <p className="text-accent-400 font-medium mb-2">{job.company}</p>
                       </div>
-                      <div className="text-right">
+                      <div className="sm:text-right mt-2 sm:mt-0">
                         <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
                           <Calendar size={16} />
-                          {job.period}
+                          <span>{job.period}</span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-400 text-sm">
                           <MapPin size={16} />
-                          {job.location}
+                          <span>{job.location}</span>
                         </div>
                       </div>
                     </div>
@@ -123,7 +162,7 @@ const Experience = () => {
                       {job.responsibilities.map((responsibility, idx) => (
                         <li key={idx} className="text-gray-300 text-sm flex items-start gap-2">
                           <div className="w-1.5 h-1.5 bg-accent-500 rounded-full mt-2 flex-shrink-0" />
-                          {responsibility}
+                          <span>{responsibility}</span>
                         </li>
                       ))}
                     </ul>
@@ -150,8 +189,8 @@ const Experience = () => {
                       transition={{ delay: index * 0.1, duration: 0.4 }}
                       viewport={{ once: true }}
                     >
-                      <div className="text-2xl font-bold text-accent-400 mb-2">{item.score}</div>
-                      <div className="text-sm text-gray-400">{item.level}</div>
+                      <div className="text-xl sm:text-2xl font-bold text-accent-400 mb-2">{item.score}</div>
+                      <div className="text-xs sm:text-sm text-gray-400">{item.level}</div>
                     </motion.div>
                   ))}
                 </div>
@@ -201,68 +240,113 @@ const Experience = () => {
                 );
               })}
             </div>
-
-            {/* Certifications */}
-            <motion.div className="mt-12" variants={itemVariants}>
-              <h3 className="text-xl font-bold text-white mb-6">Certifications</h3>
-              <div className="space-y-4">
-                <div className="glass-effect rounded-lg p-4">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-white font-medium">Java Programming</p>
-                      <p className="text-gray-400 text-sm">Wipro</p>
-                    </div>
-                    <motion.a
-                      href="https://cert.diceid.com/cid/9z7MzHvmmF"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-accent-400 hover:text-accent-300 text-sm font-medium"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      View Certificate
-                    </motion.a>
-                  </div>
-                </div>
-
-                <div className="glass-effect rounded-lg p-4">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-white font-medium">Python Programming</p>
-                      <p className="text-gray-400 text-sm">Certiport</p>
-                    </div>
-                    <motion.a
-                      href="https://www.certiport.com/portal/Pages/PrintTranscriptInfo.aspx?action=Cert&id=471&cvid=ApQqnS634DUgcKNAgabfEA=="
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-accent-400 hover:text-accent-300 text-sm font-medium"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      View Certificate
-                    </motion.a>
-                  </div>
-                </div>
-
-                <div className="glass-effect rounded-lg p-4">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-white font-medium">Django Development</p>
-                      <p className="text-gray-400 text-sm">Udemy</p>
-                    </div>
-                    <motion.a
-                      href="https://ude.my/UC-b2c0ab44-4ff5-4b78-8477-ba9a0227d57a"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-accent-400 hover:text-accent-300 text-sm font-medium"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      View Certificate
-                    </motion.a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
+
+        {/* Certifications Section - Full Width Below - Fully Responsive */}
+        <motion.div
+          className="mt-16 sm:mt-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <div className="text-center mb-8 sm:mb-12">
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4 flex items-center justify-center gap-2 sm:gap-3">
+              <GraduationCap className="text-accent-500" size={28} />
+              <span>Professional Certifications</span>
+            </h3>
+            <div className="w-16 sm:w-20 h-1 bg-accent-500 mx-auto mb-3 sm:mb-4" />
+            <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto px-4">
+              Verified credentials showcasing my technical expertise and professional development
+            </p>
+          </div>
+          
+          <div className="space-y-4 sm:space-y-6">
+            {certifications.map((cert, index) => {
+              const IconComponent = cert.icon;
+              return (
+                <motion.div
+                  key={index}
+                  className="group relative"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.01 }}
+                >
+                  <div className="absolute -inset-0.5 bg-gradient-to-r opacity-0 group-hover:opacity-100 rounded-xl blur transition duration-500" 
+                       style={{ backgroundImage: `linear-gradient(to right, var(--tw-gradient-stops))` }} />
+                  <div className="relative glass-effect rounded-xl p-4 sm:p-6 border border-white/10 hover:border-accent-500/30 transition-all duration-300">
+                    <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
+                      {/* Certificate Badge */}
+                      <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                        <div className="flex-shrink-0">
+                          <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-gradient-to-br ${cert.color} p-0.5`}>
+                            <div className="w-full h-full rounded-lg sm:rounded-xl bg-gray-900/90 backdrop-blur-sm flex items-center justify-center">
+                              <IconComponent className="text-white" size={20} />
+                            </div>
+                          </div>
+                          {/* Verification Badge - Hidden on mobile */}
+                          <div className="hidden sm:block absolute -bottom-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full border-2 border-gray-900">
+                            <div className="w-full h-full flex items-center justify-center">
+                              <Shield size={10} className="text-white" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4 mb-2 sm:mb-3">
+                            <div className="flex-1 min-w-0">
+                              <h4 className="text-base sm:text-lg font-semibold text-white group-hover:text-accent-400 transition-colors truncate">
+                                {cert.title}
+                              </h4>
+                              <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-1">
+                                <p className="text-accent-400 text-xs sm:text-sm font-medium">{cert.organization}</p>
+                                <span className="text-gray-600 hidden sm:inline">•</span>
+                                <p className="text-gray-500 text-xs font-mono truncate">
+                                  <span className="hidden sm:inline">ID: </span>
+                                  {cert.credentialId.length > 15 
+                                    ? `${cert.credentialId.substring(0, 15)}...` 
+                                    : cert.credentialId}
+                                </p>
+                              </div>
+                            </div>
+                            
+                            {/* View Button */}
+                            <motion.a
+                              href={cert.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="w-full sm:w-auto text-center px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 hover:bg-accent-500/20 border border-white/10 hover:border-accent-500/50 rounded-lg text-accent-400 text-xs sm:text-sm font-medium transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2 flex-shrink-0"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <ExternalLink size={12} />
+                              <span>Verify</span>
+                            </motion.a>
+                          </div>
+
+                          {/* Skills Tags */}
+                          <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3">
+                            {cert.skills.map((skill, idx) => (
+                              <span
+                                key={idx}
+                                className="px-2 py-0.5 sm:px-3 sm:py-1 text-xs font-medium rounded-full bg-white/5 text-gray-400 border border-white/10 hover:bg-accent-500/10 hover:text-accent-400 hover:border-accent-500/30 transition-all duration-300"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
