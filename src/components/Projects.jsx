@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FiCode,
@@ -7,12 +7,11 @@ import {
   FiCalendar,
   FiUser,
   FiTrendingUp,
-  FiDatabase,
-  FiCpu,
   FiLayers,
-  FiZap,
-  FiShield,
   FiActivity,
+  FiChevronLeft,
+  FiChevronRight,
+  FiStar,
 } from "react-icons/fi";
 
 const projectsData = [
@@ -24,26 +23,22 @@ const projectsData = [
     status: "Completed",
     type: "Academic",
     description:
-      "Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses. ",
+      "Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses.",
     longDescription:
-      "Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses. It also includes appointment notifications for doctor visits.  This project enhanced skills in mobile app development and UI design. ",
+      "Developed an Android app to help users manage medications by setting schedules, receiving alerts, and tracking doses. It also includes appointment notifications for doctor visits. This project enhanced skills in mobile app development and UI design.",
     technologies: ["Flutter", "SQLite", "Firebase"],
-    skills: [
-      { name: "Mobile App Development", level: 90 },
-      { name: "UI Design", level: 85 },
-    ],
+    skills: ["Mobile App Development", "UI Design"],
     achievements: [
       "Helped users manage medications by setting schedules, receiving alerts, and tracking doses",
-      "Includes appointment notifications for doctor visits ",
-      "Enhanced skills in mobile app development and UI design ",
+      "Includes appointment notifications for doctor visits",
+      "Enhanced skills in mobile app development and UI design",
     ],
     links: {
       github: null,
       demo: null,
       documentation: null,
     },
-    color: "#10b981", // Green theme for healthcare
-    gradient: "from-emerald-500 to-teal-600",
+    color: "#10b981",
   },
   {
     id: 2,
@@ -55,25 +50,24 @@ const projectsData = [
     description:
       "Built a web-based system to automate room allocation, maintenance tracking, and secure authentication.",
     longDescription:
-      "Built a web-based system to automate room allocation, maintenance tracking, and secure authentication. This project provided hands-on experience in full-stack development and database management. ",
+      "Built a web-based system to automate room allocation, maintenance tracking, and secure authentication. This project provided hands-on experience in full-stack development and database management.",
     technologies: ["Django", "MySQL"],
     skills: [
-      { name: "Django", level: 90 },
-      { name: "MySQL", level: 85 },
-      { name: "Full-Stack Development", level: 88 },
-      { name: "Database Management", level: 80 },
+      "Django",
+      "MySQL",
+      "Full-Stack Development",
+      "Database Management",
     ],
     achievements: [
-      "Automated room allocation, maintenance tracking, and secure authentication ",
-      "Gained hands-on experience in full-stack development and database management ",
+      "Automated room allocation, maintenance tracking, and secure authentication",
+      "Gained hands-on experience in full-stack development and database management",
     ],
     links: {
       github: null,
       demo: null,
       documentation: null,
     },
-    color: "#f59e0b", // Amber theme
-    gradient: "from-amber-500 to-orange-600",
+    color: "#f59e0b",
   },
   {
     id: 3,
@@ -83,28 +77,27 @@ const projectsData = [
     status: "Completed",
     type: "Academic",
     description:
-      "Created a deep-learning system to classify blood cell images and predict leukemia stages. ",
+      "Created a deep-learning system to classify blood cell images and predict leukemia stages.",
     longDescription:
-      "Created a deep-learning system to classify blood cell images and predict leukemia stages. A Streamlit interface enables real-time predictions. This project strengthened skills in ML model deployment and AI applications. ",
+      "Created a deep-learning system to classify blood cell images and predict leukemia stages. A Streamlit interface enables real-time predictions. This project strengthened skills in ML model deployment and AI applications.",
     technologies: ["MobileNetV2 CNN", "Streamlit"],
     skills: [
-      { name: "MobileNetV2 CNN", level: 85 },
-      { name: "Streamlit", level: 80 },
-      { name: "ML Model Deployment", level: 90 },
-      { name: "AI Applications", level: 88 },
+      "MobileNetV2 CNN",
+      "Streamlit",
+      "ML Model Deployment",
+      "AI Applications",
     ],
     achievements: [
-      "Classified blood cell images and predicted leukemia stages ",
-      "Enabled real-time predictions with a Streamlit interface ",
-      "Strengthened skills in ML model deployment and AI applications ",
+      "Classified blood cell images and predicted leukemia stages",
+      "Enabled real-time predictions with a Streamlit interface",
+      "Strengthened skills in ML model deployment and AI applications",
     ],
     links: {
       github: "https://github.com/CodeByVinoth",
       demo: null,
       documentation: null,
     },
-    color: "#8b5cf6", // Purple theme for ML
-    gradient: "from-purple-500 to-violet-600",
+    color: "#8b5cf6",
   },
   {
     id: 4,
@@ -116,13 +109,9 @@ const projectsData = [
     description:
       "Interactive and animated portfolio website built with Django and React-style UI.",
     longDescription:
-      "Built a visually appealing and interactive portfolio website showcasing my skills, projects, and resume. Integrated animated text greetings, project showcase with smooth transitions, and a downloadable resume feature. Designed with multiple animations and vibrant color combinations inspired by modern UI trends.",
+      "Built a visually appealing and interactive portfolio website showcasing my skills, projects, and resume. Integrated animated text greetings, project showcase with smooth transitions, and a downloadable resume feature.",
     technologies: ["Django", "HTML", "CSS", "JavaScript"],
-    skills: [
-      { name: "UI/UX Design", level: 88 },
-      { name: "Django", level: 85 },
-      { name: "Frontend Animation", level: 80 },
-    ],
+    skills: ["UI/UX Design", "Django", "Frontend Animation"],
     achievements: [
       "Showcased projects, skills, and resume in a single platform",
       "Implemented animated greetings and interactive sections",
@@ -134,7 +123,6 @@ const projectsData = [
       documentation: null,
     },
     color: "#ec4899",
-    gradient: "from-pink-500 to-rose-600",
   },
   {
     id: 5,
@@ -146,13 +134,9 @@ const projectsData = [
     description:
       "A full-stack web application focusing on smooth data flow and secure user authentication.",
     longDescription:
-      "Terndra is a full-stack web application built to experiment with advanced authentication, secure APIs, and scalable backend architecture. This project improves experience with MERN stack (MongoDB, Express, React, Node.js) and Git workflow, focusing on clean code structure and CI/CD deployment readiness.",
+      "Terndra is a full-stack web application built to experiment with advanced authentication, secure APIs, and scalable backend architecture. This project improves experience with MERN stack and Git workflow.",
     technologies: ["React", "Node.js", "Express", "MongoDB"],
-    skills: [
-      { name: "MERN Stack Development", level: 88 },
-      { name: "API Design", level: 85 },
-      { name: "Git & Version Control", level: 80 },
-    ],
+    skills: ["MERN Stack Development", "API Design", "Git & Version Control"],
     achievements: [
       "Implemented secure user authentication using JWT",
       "Practiced Git branching and conflict resolution",
@@ -163,12 +147,11 @@ const projectsData = [
       demo: "https://terndra.vercel.app/",
       documentation: null,
     },
-    color: "#14b8a6", // teal color theme
-    gradient: "from-teal-500 to-cyan-600",
+    color: "#14b8a6",
   },
   {
     id: 6,
-    title: " Travel Bridge",
+    title: "Travel Bridge",
     category: "Web Application",
     period: "2026",
     status: "Completed",
@@ -176,13 +159,9 @@ const projectsData = [
     description:
       "A modern travel booking and trip management platform designed for seamless travel experiences.",
     longDescription:
-      "Designed and developed Change My Travel Bridge, a responsive travel platform focused on trip planning, booking assistance, and user-friendly navigation. Built using React, Vite, and Tailwind CSS with smooth animations, modern UI components, and optimized performance for both desktop and mobile users.",
+      "Designed and developed Travel Bridge, a responsive travel platform focused on trip planning, booking assistance, and user-friendly navigation. Built using React, Vite, and Tailwind CSS with smooth animations.",
     technologies: ["React", "Vite", "Tailwind CSS"],
-    skills: [
-      { name: "React", level: 90 },
-      { name: "Frontend Design", level: 88 },
-      { name: "Responsive UI", level: 85 },
-    ],
+    skills: ["React", "Frontend Design", "Responsive UI"],
     achievements: [
       "Developed a responsive travel booking platform",
       "Implemented smooth animations and modern UI design",
@@ -190,558 +169,412 @@ const projectsData = [
     ],
     links: {
       github: "https://github.com/CodeByVinoth",
-
+      demo: null,
       documentation: null,
     },
     color: "#06b6d4",
-    gradient: "from-cyan-500 to-blue-600",
   },
 ];
 
+const StatusBadge = ({ status, type }) => {
+  const getStatusColor = () => {
+    switch (status) {
+      case "Completed":
+        return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+      case "In Progress":
+        return "bg-blue-500/10 text-blue-400 border-blue-500/20";
+      default:
+        return "bg-zinc-500/10 text-zinc-400 border-zinc-500/20";
+    }
+  };
+
+  const getTypeIcon = () => {
+    switch (type) {
+      case "Academic":
+        return "🎓";
+      case "Professional":
+        return "💼";
+      default:
+        return "📋";
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-2">
+      <span
+        className={`px-2.5 py-1 rounded-md text-[10px] font-bold tracking-widest border uppercase ${getStatusColor()}`}
+      >
+        {status}
+      </span>
+      <span className="px-2.5 py-1 rounded-md text-[10px] font-bold tracking-widest bg-zinc-900 text-zinc-400 border border-zinc-800 uppercase">
+        {getTypeIcon()} {type}
+      </span>
+    </div>
+  );
+};
+
 const ProjectsSection = () => {
-  const [activeProject, setActiveProject] = useState(projectsData[0]);
-  const [isMobile, setIsMobile] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const activeProject = projectsData[currentIndex];
 
-  // Handle responsive design
+  const sectionRef = useRef(null);
+  const scrollTimeoutRef = useRef(null);
+  const isScrollingRef = useRef(false);
+  const accumulatorRef = useRef(0);
+
+  const currentIndexRef = useRef(currentIndex);
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    currentIndexRef.current = currentIndex;
+  }, [currentIndex]);
 
-    if (typeof window !== "undefined") {
-      handleResize();
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
+  const navigateToProject = useCallback((direction) => {
+    if (direction === "next") {
+      setCurrentIndex((prev) =>
+        prev < projectsData.length - 1 ? prev + 1 : prev
+      );
+    } else if (direction === "prev") {
+      setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
     }
   }, []);
 
-  // Load fonts to match other sections
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const handleWheel = (e) => {
+      const isAtLastProject = currentIndexRef.current === projectsData.length - 1;
+      const isAtFirstProject = currentIndexRef.current === 0;
+
+      if (isAtLastProject && e.deltaY > 0) {
+        return;
+      }
+
+      if (isAtFirstProject && e.deltaY < 0) {
+        return;
+      }
+
+      e.preventDefault();
+      accumulatorRef.current += e.deltaY;
+
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      const threshold = 60;
+
+      if (
+        !isScrollingRef.current &&
+        Math.abs(accumulatorRef.current) >= threshold
+      ) {
+        isScrollingRef.current = true;
+
+        if (accumulatorRef.current > 0) {
+          navigateToProject("next");
+        } else if (accumulatorRef.current < 0) {
+          navigateToProject("prev");
+        }
+
+        accumulatorRef.current = 0;
+      }
+
+      scrollTimeoutRef.current = setTimeout(() => {
+        isScrollingRef.current = false;
+        accumulatorRef.current = 0;
+      }, 300);
+    };
+
+    section.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      section.removeEventListener("wheel", handleWheel);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, [navigateToProject]);
+
   useEffect(() => {
     const link = document.createElement("link");
     link.href =
-      "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap";
+      "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap";
     link.rel = "stylesheet";
     document.head.appendChild(link);
 
-    const style = document.createElement("style");
-    style.textContent = `@font-face { font-family: 'SF Pro Display'; src: url('${
-      import.meta.env.BASE_URL
-    }fonts/SF-Pro-Display-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; };`;
-    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(link);
+    };
   }, []);
 
-  const StatusBadge = ({ status, type }) => {
-    const getStatusColor = () => {
-      switch (status) {
-        case "Completed":
-          return "bg-green-500/20 text-green-400 border-green-500/30";
-        case "In Progress":
-          return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-        default:
-          return "bg-gray-500/20 text-gray-400 border-gray-500/30";
-      }
-    };
-
-    const getTypeIcon = () => {
-      switch (type) {
-        case "Academic":
-          return "🎓";
-        case "Professional":
-          return "💼";
-        default:
-          return "📋";
-      }
-    };
-
-    return (
-      <div className="flex items-center gap-2 mb-4">
-        <span
-          className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor()}`}
-        >
-          {status}
-        </span>
-        <span className="px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/80 border border-white/20">
-          {getTypeIcon()} {type}
-        </span>
-      </div>
-    );
+  const floatingAnimation = {
+    initial: { y: 0 },
+    animate: {
+      y: [-10, 10, -10],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
   };
-
-  // Skill bar component
-  const SkillBar = ({ skill }) => (
-    <div className="mb-3">
-      <div className="flex justify-between items-center text-sm mb-2">
-        <span className="text-white/80 font-medium">{skill.name}</span>
-        <span className="text-white/60">{skill.level}%</span>
-      </div>
-      <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
-        <motion.div
-          className="h-full rounded-full"
-          style={{ backgroundColor: activeProject.color }}
-          initial={{ width: "0%" }}
-          animate={{ width: `${skill.level}%` }}
-          transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-        />
-      </div>
-    </div>
-  );
-
-  // Project navigation item
-  const ProjectNavItem = ({ project, isActive, onClick }) => (
-    <motion.div
-      className={`cursor-pointer p-4 rounded-lg transition-all duration-300 border ${
-        isActive
-          ? "bg-white/10 border-white/20 shadow-lg"
-          : "bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/15"
-      }`}
-      onClick={onClick}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-    >
-      <div className="flex items-center gap-3 mb-2">
-        <div
-          className="w-3 h-3 rounded-full"
-          style={{ backgroundColor: project.color }}
-        />
-        <h3 className="font-semibold text-white text-sm md:text-base">
-          {project.title}
-        </h3>
-      </div>
-      <p className="text-white/60 text-xs md:text-sm mb-2">
-        {project.category}
-      </p>
-      <p className="text-white/50 text-xs">{project.period}</p>
-    </motion.div>
-  );
 
   return (
     <section
+      ref={sectionRef}
       id="projects"
-      className="relative text-white py-20 px-6 md:px-12 lg:px-20 w-full overflow-hidden"
+      className="relative text-white py-16 px-4 md:px-8 lg:px-16 w-full min-h-screen flex flex-col justify-center items-center overflow-hidden"
       style={{
         fontFamily:
-          "'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          "'Plus Jakarta Sans', 'SF Pro Display', -apple-system, sans-serif",
       }}
     >
-      {/* Enhanced Background Overlay */}
-      <div className="absolute inset-0 z-[1] overflow-hidden">
-        {/* Gradient continuation from skills section */}
-        <div className="absolute inset-0 bg-gradient-to-b" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/10 to-transparent" />
-
-        {/* Enhanced tech grid pattern */}
+      {/* Integrated Background Blur Elements from Skills */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <motion.div
-          className="absolute inset-0"
-          animate={{ opacity: [0.02, 0.06, 0.02] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(139,92,246,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.06) 1px, transparent 1px)",
-            backgroundSize: "120px 120px",
-          }}
-        />
-
-        {/* Dynamic color-changing particles */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full"
-          style={{ backgroundColor: activeProject.color }}
+          className="absolute -top-20 -right-20 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"
           animate={{
-            x: [0, 120, -60, 0],
-            y: [0, -100, 80, 0],
-            opacity: [0, 0.4, 0.2, 0],
-            scale: [0.5, 1.2, 0.8, 0.5],
+            scale: [1, 1.2, 1],
+            x: [0, 50, 0],
+            y: [0, 30, 0],
           }}
-          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute top-3/4 right-1/3 w-1.5 h-1.5 rounded-full"
-          style={{ backgroundColor: activeProject.color, opacity: 0.3 }}
+          className="absolute -bottom-20 -left-20 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"
           animate={{
-            x: [0, -100, 60, 0],
-            y: [0, 60, -40, 0],
-            opacity: [0, 0.6, 0.1, 0],
-            scale: [0.3, 1, 0.6, 0.3],
+            scale: [1.2, 1, 1.2],
+            x: [0, -30, 0],
+            y: [0, -50, 0],
           }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 8,
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 right-1/4 w-1 h-1 rounded-full"
-          style={{ backgroundColor: "#10b981", opacity: 0.25 }}
-          animate={{
-            x: [0, 80, -120, 0],
-            y: [0, -70, 40, 0],
-            opacity: [0, 0.5, 0.15, 0],
-          }}
-          transition={{
-            duration: 35,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 15,
-          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10">
-        {/* Header */}
+      {/* Main Container Frame */}
+      <div className="relative z-10 max-w-7xl w-full flex flex-col justify-center">
+        {/* Integrated Floating Header Layout */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.8 }}
-          className="mb-16"
+          viewport={{ once: true }}
+          className="mb-12 md:mb-16 text-center md:text-left md:flex md:items-end md:justify-between border-b border-white/10 pb-8"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-center">
-            Featured{" "}
-            <motion.span
-              className="bg-gradient-to-r from-purple-500 via-emerald-500 to-amber-500 bg-clip-text text-transparent"
-              animate={{ backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"] }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-              style={{ backgroundSize: "200% 100%" }}
+          <div className="text-center md:text-left">
+            <motion.h2
+              className="text-4xl md:text-6xl font-extrabold tracking-tight text-white inline-flex items-center gap-3 justify-center md:justify-start"
+              {...floatingAnimation}
             >
-              Projects
-            </motion.span>
-          </h2>
-          <p className="text-center text-white/60 mt-4 max-w-2xl mx-auto">
-            A showcase of my development journey from academic projects to
-            professional implementations
-          </p>
+              <FiCode className="text-3xl md:text-4xl text-cyan-400" />
+              Featured{" "}
+              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                Projects
+              </span>
+              <FiStar className="text-3xl md:text-4xl text-yellow-400" />
+            </motion.h2>
+            <p className="text-gray-400 text-lg max-w-2xl mt-4">
+              Crafting digital experiences with modern technologies and scalable architecture
+            </p>
+          </div>
+
+          {/* Navigation Controllers */}
+          <div className="flex items-center justify-center gap-3 mt-6 md:mt-0">
+            <button
+              onClick={() => navigateToProject("prev")}
+              disabled={currentIndex === 0}
+              className="w-12 h-12 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Previous project"
+            >
+              <FiChevronLeft size={20} />
+            </button>
+            <button
+              onClick={() => navigateToProject("next")}
+              disabled={currentIndex === projectsData.length - 1}
+              className="w-12 h-12 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Next project"
+            >
+              <FiChevronRight size={20} />
+            </button>
+          </div>
         </motion.div>
 
-        {/* Main Content Container */}
-        <div className="max-w-7xl mx-auto">
-          {isMobile ? (
-            // Mobile: Stacked Layout
-            <div className="space-y-8">
-              {/* Mobile Project Selector */}
-              <div className="space-y-4">
-                {projectsData.map((project) => (
-                  <ProjectNavItem
-                    key={project.id}
-                    project={project}
-                    isActive={activeProject.id === project.id}
-                    onClick={() => setActiveProject(project)}
-                  />
-                ))}
-              </div>
+        {/* Project Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          {/* LEFT PANEL */}
+          <div className="lg:col-span-5 flex flex-col">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeProject.id}
+                initial={{ opacity: 0, x: -30, scale: 0.98 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 30, scale: 0.98 }}
+                transition={{ duration: 0.35, ease: "easeInOut" }}
+                className="relative flex-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col justify-between overflow-hidden group shadow-2xl"
+                whileHover={{
+                  borderColor: activeProject.color,
+                  boxShadow: `0 20px 40px ${activeProject.color}15`,
+                }}
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{
+                    background: `radial-gradient(circle at center, ${activeProject.color}10 0%, transparent 70%)`,
+                  }}
+                />
 
-              {/* Mobile Project Details */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeProject.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-white/5 rounded-xl p-6 border border-white/10 backdrop-blur-sm"
-                >
-                  <div className="mb-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div
-                        className="w-4 h-4 rounded-full"
-                        style={{ backgroundColor: activeProject.color }}
-                      />
-                      <h3 className="text-2xl font-bold text-white">
-                        {activeProject.title}
-                      </h3>
-                    </div>
-                    <StatusBadge
-                      status={activeProject.status}
-                      type={activeProject.type}
-                    />
+                <div>
+                  <StatusBadge
+                    status={activeProject.status}
+                    type={activeProject.type}
+                  />
+
+                  <h3 className="text-3xl md:text-4xl font-black tracking-tight text-white mt-6 mb-3 leading-tight">
+                    {activeProject.title}
+                  </h3>
+
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-500 font-mono tracking-wider mb-6 font-semibold">
+                    <span className="flex items-center gap-1.5">
+                      <FiCalendar className="text-zinc-600" />{" "}
+                      {activeProject.period}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <FiUser className="text-zinc-600" />{" "}
+                      {activeProject.category}
+                    </span>
                   </div>
-                  <p className="text-white/80 leading-relaxed mb-6">
+
+                  <p className="text-zinc-300 text-sm md:text-base leading-relaxed font-normal">
+                    {activeProject.description}
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-white/10">
+                  <h4 className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
+                    <FiCode size={12} /> Tech Architecture
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {activeProject.technologies.map((tech, i) => (
+                      <span
+                        key={i}
+                        className="text-xs font-semibold px-3 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* RIGHT PANEL */}
+          <div className="lg:col-span-7 flex flex-col">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeProject.id}
+                initial={{ opacity: 0, x: 30, scale: 0.98 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -30, scale: 0.98 }}
+                transition={{ duration: 0.35, ease: "easeInOut", delay: 0.02 }}
+                className="flex-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col justify-between shadow-xl"
+              >
+                <div>
+                  <h4 className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
+                    <FiLayers size={12} /> Technical Deep-Dive
+                  </h4>
+                  <p className="text-xs md:text-sm text-zinc-400 leading-relaxed font-medium mb-6">
                     {activeProject.longDescription}
                   </p>
 
-                  {/* Technologies */}
-                  <div className="mb-6">
-                    <h4 className="text-white/90 font-semibold mb-3 flex items-center gap-2">
-                      <FiCode className="text-lg" /> Technologies
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {activeProject.technologies.map((tech, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/80 border border-white/20"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  <h4 className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
+                    <FiActivity size={12} /> Engineering Impact Vectors
+                  </h4>
+                  <ul className="space-y-3 mb-6">
+                    {activeProject.achievements.map((achievement, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start gap-3 text-xs md:text-sm text-zinc-300 leading-relaxed"
+                      >
+                        <div
+                          className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
+                          style={{ backgroundColor: activeProject.color }}
+                        />
+                        <span>{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-                  {/* Skills */}
-                  <div className="mb-6">
-                    <h4 className="text-white/90 font-semibold mb-4 flex items-center gap-2">
-                      <FiTrendingUp className="text-lg" /> Skills Developed
-                    </h4>
+                  <h4 className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
+                    <FiTrendingUp size={12} /> Specialization Capabilities
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
                     {activeProject.skills.map((skill, index) => (
-                      <SkillBar key={index} skill={skill} />
+                      <span
+                        key={index}
+                        className="px-2.5 py-1 bg-white/5 text-[11px] font-medium text-zinc-400 rounded border border-white/10"
+                      >
+                        {skill}
+                      </span>
                     ))}
                   </div>
+                </div>
 
-                  {/* Achievements */}
-                  <div className="mb-6">
-                    <h4 className="text-white/90 font-semibold mb-3 flex items-center gap-2">
-                      <FiActivity className="text-lg" /> Key Achievements
-                    </h4>
-                    <ul className="space-y-2">
-                      {activeProject.achievements.map((achievement, index) => (
-                        <li
-                          key={index}
-                          className="flex items-start gap-2 text-white/80"
-                        >
-                          <div
-                            className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
-                            style={{ backgroundColor: activeProject.color }}
-                          />
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Links */}
-                  <div className="flex flex-wrap gap-3">
+                <div className="mt-8 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                     {activeProject.links.github && (
-                      <a
+                      <motion.a
+                        whileHover={{ y: -2, backgroundColor: "rgba(255,255,255,0.1)" }}
+                        whileTap={{ scale: 0.98 }}
                         href={activeProject.links.github}
-                        className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 text-white/80 hover:text-white border border-white/20"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 px-4 py-2 bg-white/5 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors border border-white/10 text-zinc-200 w-full sm:w-auto"
                       >
-                        <FiGithub />
-                        <span>Source Code</span>
-                      </a>
+                        <FiGithub size={13} /> Code Repository
+                      </motion.a>
                     )}
                     {activeProject.links.demo && (
-                      <a
+                      <motion.a
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.98 }}
                         href={activeProject.links.demo}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 text-white border-2"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border w-full sm:w-auto"
                         style={{
-                          backgroundColor: `${activeProject.color}20`,
+                          backgroundColor: `${activeProject.color}15`,
                           borderColor: activeProject.color,
                           color: activeProject.color,
                         }}
                       >
-                        <FiExternalLink />
-                        <span>Live Demo</span>
-                      </a>
+                        <FiExternalLink size={13} /> Live System
+                      </motion.a>
                     )}
                   </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          ) : (
-            // Desktop: Split Screen Layout
-            <div className="grid grid-cols-12 gap-8 min-h-[600px]">
-              {/* Left Panel - Project Navigation */}
-              <div className="col-span-4">
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="sticky top-8"
-                >
-                  <h3 className="text-xl font-semibold text-white/90 mb-6 flex items-center gap-2">
-                    <FiLayers /> Project Archive
-                  </h3>
-                  <div className="space-y-4">
-                    {projectsData.map((project) => (
-                      <ProjectNavItem
-                        key={project.id}
-                        project={project}
-                        isActive={activeProject.id === project.id}
-                        onClick={() => setActiveProject(project)}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Add New Project Placeholder */}
-                  <motion.div
-                    className="mt-6 p-4 border-2 border-dashed border-white/20 rounded-lg text-center cursor-pointer hover:border-white/30 transition-colors duration-200"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="text-white/50 text-sm">
-                      <FiZap className="mx-auto mb-2" />
-                      More projects coming soon...
-                    </div>
-                  </motion.div>
-                </motion.div>
-              </div>
-
-              {/* Right Panel - Project Details */}
-              <div className="col-span-8">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeProject.id}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -30 }}
-                    transition={{ duration: 0.4 }}
-                    className="bg-white/5 rounded-xl p-8 border border-white/10 backdrop-blur-sm"
-                  >
-                    {/* Project Header */}
-                    <div className="mb-8">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div
-                          className="w-5 h-5 rounded-full"
-                          style={{ backgroundColor: activeProject.color }}
-                        />
-                        <h3 className="text-3xl font-bold text-white">
-                          {activeProject.title}
-                        </h3>
-                      </div>
-                      <StatusBadge
-                        status={activeProject.status}
-                        type={activeProject.type}
-                      />
-                      <div className="flex items-center gap-4 text-white/60 text-sm">
-                        <div className="flex items-center gap-2">
-                          <FiCalendar /> {activeProject.period}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <FiUser /> {activeProject.category}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Project Description */}
-                    <div className="mb-8">
-                      <p className="text-white/80 leading-relaxed text-lg">
-                        {activeProject.longDescription}
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                      {/* Left Column */}
-                      <div className="space-y-6">
-                        {/* Technologies */}
-                        <div>
-                          <h4 className="text-white/90 font-semibold mb-4 flex items-center gap-2">
-                            <FiCode className="text-lg" /> Technologies Used
-                          </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {activeProject.technologies.map((tech, index) => (
-                              <motion.span
-                                key={index}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: index * 0.1 }}
-                                className="px-3 py-2 bg-white/10 rounded-lg text-sm text-white/80 border border-white/20 hover:bg-white/20 transition-colors duration-200"
-                              >
-                                {tech}
-                              </motion.span>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Achievements */}
-                        <div>
-                          <h4 className="text-white/90 font-semibold mb-4 flex items-center gap-2">
-                            <FiActivity className="text-lg" /> Key Achievements
-                          </h4>
-                          <ul className="space-y-3">
-                            {activeProject.achievements.map(
-                              (achievement, index) => (
-                                <motion.li
-                                  key={index}
-                                  initial={{ opacity: 0, x: -20 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: index * 0.1 }}
-                                  className="flex items-start gap-3 text-white/80"
-                                >
-                                  <div
-                                    className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                                    style={{
-                                      backgroundColor: activeProject.color,
-                                    }}
-                                  />
-                                  {achievement}
-                                </motion.li>
-                              )
-                            )}
-                          </ul>
-                        </div>
-                      </div>
-
-                      {/* Right Column */}
-                      <div>
-                        {/* Skills Developed */}
-                        <div>
-                          <h4 className="text-white/90 font-semibold mb-4 flex items-center gap-2">
-                            <FiTrendingUp className="text-lg" /> Skills
-                            Developed
-                          </h4>
-                          <div className="space-y-4">
-                            {activeProject.skills.map((skill, index) => (
-                              <SkillBar key={index} skill={skill} />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="mt-8 pt-6 border-t border-white/10">
-                      <div className="flex flex-wrap gap-4">
-                        {activeProject.links.github && (
-                          <motion.a
-                            href={activeProject.links.github}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 text-white/80 hover:text-white border border-white/20"
-                          >
-                            <FiGithub />
-                            <span>Source Code</span>
-                          </motion.a>
-                        )}
-                        {activeProject.links.demo && (
-                          <motion.a
-                            href={activeProject.links.demo}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 px-6 py-3 rounded-lg transition-colors duration-200 text-white border-2"
-                            style={{
-                              backgroundColor: `${activeProject.color}20`,
-                              borderColor: activeProject.color,
-                              color: activeProject.color,
-                            }}
-                          >
-                            <FiExternalLink />
-                            <span>Live Demo</span>
-                          </motion.a>
-                        )}
-                        {activeProject.links.documentation && (
-                          <motion.a
-                            href={activeProject.links.documentation}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors duration-200 text-white/60 hover:text-white/80 border border-white/10"
-                          >
-                            <FiShield />
-                            <span>Documentation</span>
-                          </motion.a>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
-          )}
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .perspective-1000 {
+          perspective: 1000px;
+        }
+        .preserve-3d {
+          transform-style: preserve-3d;
+        }
+        .backface-hidden {
+          backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+          transform: rotateY(180deg);
+        }
+        .group:hover .group-hover\\:rotate-y-180 {
+          transform: rotateY(180deg);
+        }
+      `}</style>
     </section>
   );
 };

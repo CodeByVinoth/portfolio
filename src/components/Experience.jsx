@@ -7,7 +7,7 @@ const Experience = () => {
     {
       title: 'Software Developer Intern',
       company: 'Wattstrons',
-      period: 'Aug 2025 - Present',
+      period: 'Aug 2025 - Mar 2026',
       location: 'Remote',
       responsibilities: [
         'Developed interactive UI components and animations using React and Tailwind CSS',
@@ -44,8 +44,8 @@ const Experience = () => {
   const certifications = [
     {
       title: "Full Stack Java Development",
-      organization: "Wipro TalentNext",
-      credentialId: "FSJD-2024-XXXX",
+      organization: "EXcelR",
+      credentialId: "11099/EXCELR/05012026",
       skills: ["Java", "Spring Boot", "React", "MySQL", "REST APIs"],
       link: "#",
       color: "from-blue-500 to-cyan-500",
@@ -288,11 +288,7 @@ const Experience = () => {
                             </div>
                           </div>
                           {/* Verification Badge - Hidden on mobile */}
-                          <div className="hidden sm:block absolute -bottom-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full border-2 border-gray-900">
-                            <div className="w-full h-full flex items-center justify-center">
-                              <Shield size={10} className="text-white" />
-                            </div>
-                          </div>
+                          
                         </div>
 
                         <div className="flex-1 min-w-0">
