@@ -91,7 +91,7 @@ const Hero = () => {
                 View My Work
               </motion.button>
               <motion.a
-                href="/resume.pdf"
+                href="/Vinothkanna_J_R_CV.pdf"
                 target="_blank"
                 className="relative border border-white/20 text-white px-6 sm:px-8 py-3 rounded-lg font-semibold backdrop-blur-md bg-white/10 
              shadow-[0_0_20px_rgba(0,255,200,0.15)] transition-all duration-300 
