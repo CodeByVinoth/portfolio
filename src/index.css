@@ -67,10 +67,6 @@
   color: white;
 }
 
-/* Smooth animations */
-* {
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
-}
 /* Glass liquid panel look */
 .glass-liquid {
   background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
@@ -96,6 +92,7 @@
               inset 0 0 40px rgba(0, 255, 200, 0.1),
               0 8px 32px rgba(0, 0, 0, 0.3);
 }
+
 .liquid-glass {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px) saturate(180%);
@@ -116,6 +113,7 @@
   height: 200%;
   background: radial-gradient(circle at center, rgba(255,255,255,0.15), transparent 70%);
   animation: liquid-move 6s infinite linear;
+  pointer-events: none;
 }
 
 @keyframes liquid-move {
@@ -123,5 +121,14 @@
   100% { transform: rotate(360deg); }
 }
 
-
-
+/* Respect system accessibility settings and avoid animating on the compositor needlessly. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
