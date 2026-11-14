@@ -5,6 +5,18 @@ import { Briefcase, Award, Calendar, MapPin, Trophy, Users, FileText, ExternalLi
 const Experience = () => {
   const workExperience = [
     {
+      title: 'Process Automation Engineer',
+      company: 'BCS',
+      period: 'Aug 2025 - Present',
+      location: 'Chennai',
+      responsibilities: [
+        'Automating business and operational processes to improve efficiency, accuracy, and turnaround time.',
+        'Designing and implementing workflow-based solutions to reduce manual effort across repetitive tasks.',
+        'Collaborating with teams to analyze process bottlenecks and identify opportunities for optimization.',
+        'Supporting process improvement initiatives through documentation, monitoring, and continuous refinement.'
+      ]
+    },
+    {
       title: 'Software Developer Intern',
       company: 'Wattstrons',
       period: 'Aug 2025 - Mar 2026',
@@ -117,14 +129,12 @@ const Experience = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Left Column - Experience */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            {/* Work Experience */}
             <motion.div className="mb-12" variants={itemVariants}>
               <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                 <Briefcase className="text-accent-500" size={28} />
@@ -138,9 +148,8 @@ const Experience = () => {
                     className="glass-effect rounded-xl p-6 hover-glow relative"
                     whileHover={{ scale: 1.02 }}
                   >
-                    {/* Timeline dot */}
                     <div className="absolute -left-3 top-8 w-6 h-6 bg-accent-500 rounded-full border-4 border-black hidden lg:block" />
-                    
+
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
                       <div>
                         <h4 className="text-xl font-semibold text-white mb-1">{job.title}</h4>
@@ -171,7 +180,6 @@ const Experience = () => {
               </div>
             </motion.div>
 
-            {/* Academic Performance */}
             <motion.div variants={itemVariants}>
               <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                 <Award className="text-accent-500" size={28} />
@@ -198,7 +206,6 @@ const Experience = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Achievements */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -243,7 +250,6 @@ const Experience = () => {
           </motion.div>
         </div>
 
-        {/* Certifications Section - Full Width Below - Fully Responsive */}
         <motion.div
           className="mt-16 sm:mt-20"
           initial={{ opacity: 0, y: 30 }}
@@ -261,7 +267,7 @@ const Experience = () => {
               Verified credentials showcasing my technical expertise and professional development
             </p>
           </div>
-          
+
           <div className="space-y-4 sm:space-y-6">
             {certifications.map((cert, index) => {
               const IconComponent = cert.icon;
@@ -275,11 +281,10 @@ const Experience = () => {
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.01 }}
                 >
-                  <div className="absolute -inset-0.5 bg-gradient-to-r opacity-0 group-hover:opacity-100 rounded-xl blur transition duration-500" 
+                  <div className="absolute -inset-0.5 bg-gradient-to-r opacity-0 group-hover:opacity-100 rounded-xl blur transition duration-500"
                        style={{ backgroundImage: `linear-gradient(to right, var(--tw-gradient-stops))` }} />
                   <div className="relative glass-effect rounded-xl p-4 sm:p-6 border border-white/10 hover:border-accent-500/30 transition-all duration-300">
                     <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
-                      {/* Certificate Badge */}
                       <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
                         <div className="flex-shrink-0">
                           <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-gradient-to-br ${cert.color} p-0.5`}>
@@ -287,8 +292,6 @@ const Experience = () => {
                               <IconComponent className="text-white" size={20} />
                             </div>
                           </div>
-                          {/* Verification Badge - Hidden on mobile */}
-                          
                         </div>
 
                         <div className="flex-1 min-w-0">
@@ -302,19 +305,18 @@ const Experience = () => {
                                 <span className="text-gray-600 hidden sm:inline">•</span>
                                 <p className="text-gray-500 text-xs font-mono truncate">
                                   <span className="hidden sm:inline">ID: </span>
-                                  {cert.credentialId.length > 15 
-                                    ? `${cert.credentialId.substring(0, 15)}...` 
+                                  {cert.credentialId.length > 15
+                                    ? `${cert.credentialId.substring(0, 15)}...`
                                     : cert.credentialId}
                                 </p>
                               </div>
                             </div>
-                            
-                            {/* View Button */}
+
                             <motion.a
                               href={cert.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="w-full sm:w-auto text-center px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 hover:bg-accent-500/20 border border-white/10 hover:border-accent-500/50 rounded-lg text-accent-400 text-xs sm:text-sm font-medium transition-all duration-300 flex items-center justify-center gap-1.5 sm:gap-2 flex-shrink-0"
+                              className="w-full sm:w-auto text-center px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 hover:bg-accent-500/20 border border-white/10 hover:border-accent-500/50 rounded-lg text-white text-xs sm:text-sm font-medium inline-flex items-center justify-center gap-1.5"
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                             >
@@ -323,12 +325,11 @@ const Experience = () => {
                             </motion.a>
                           </div>
 
-                          {/* Skills Tags */}
                           <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3">
                             {cert.skills.map((skill, idx) => (
                               <span
                                 key={idx}
-                                className="px-2 py-0.5 sm:px-3 sm:py-1 text-xs font-medium rounded-full bg-white/5 text-gray-400 border border-white/10 hover:bg-accent-500/10 hover:text-accent-400 hover:border-accent-500/30 transition-all duration-300"
+                                className="px-2 py-0.5 sm:px-3 sm:py-1 text-xs font-medium rounded-full bg-white/5 text-gray-400 border border-white/10 hover:bg-accent-500/10 hover:text-accent-400 transition-colors"
                               >
                                 {skill}
                               </span>
